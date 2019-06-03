@@ -4,7 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:parl_cuision/authentication/authentication.dart';
 import 'package:parl_cuision/common/common.dart';
+import 'package:parl_cuision/information/information.dart';
 import 'package:parl_cuision/menu/menu.dart';
+
 
 
 class HomePage extends StatefulWidget {
@@ -19,8 +21,8 @@ class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
   final List<Widget> _children = [
     MenuPage(),
-    PlaceholderWidget(Colors.white),
     PlaceholderWidget(Colors.deepOrange),
+    InfoPage(),
     PlaceholderWidget(Colors.green)
   ];
 
@@ -28,6 +30,9 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final AuthenticationBloc authenticationBloc =
         BlocProvider.of<AuthenticationBloc>(context);
+
+    print(MediaQuery.of(context).size.height);
+    print(MediaQuery.of(context).size.width);
 
     return Scaffold(
       body: _children[_currentIndex],

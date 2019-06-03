@@ -27,6 +27,7 @@ dependencies:
   meta: ^1.1.6
   equatable: ^0.2.0
   http: ^0.12.0+2
+  flutter_screenutil: ^0.5.2
   user_repository:
     path: user_repository
 
