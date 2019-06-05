@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class InfoPage extends StatelessWidget {
+
+  String _pageCommonFontFamily = "Nunito Sans";
+
   @override
   Widget build(BuildContext context) {
     ScreenUtil.instance =
@@ -26,16 +29,26 @@ class InfoPage extends StatelessWidget {
     print(
         'The ratio of  height width to the size of the design:${ScreenUtil.getInstance().scaleHeight * ScreenUtil.pixelRatio}');
 
-    return Column(
-      children: <Widget>[
-        InfoTop(),
-        Hours(),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          InfoTop(),
+          Hours(),
+          SizedBox(height: 40,),
+          Divider(color: Colors.grey[500], height: 2,),
+          SizedBox(height: 20,),
+          Payment(),
+          SizedBox(height: 40,),
+          Divider(color: Colors.grey[500], height: 2,),
+          SizedBox(height: 20,),
+          Contact(),
+        ],
+      ),
     );
   }
 
   Widget InfoTop() {
-    var contentTextStyle = new TextStyle(fontSize: 18.0, );
+    var contentTextStyle = new TextStyle(fontSize: 18.0, fontFamily: 'Nunito Sans', );
     return Container(
       height: ScreenUtil.getInstance().setHeight(933),
       color: Colors.white,
@@ -54,7 +67,7 @@ class InfoPage extends StatelessWidget {
                   child: Text(
                     "Information",
                     style:
-                        TextStyle(fontSize: 36.0, fontWeight: FontWeight.bold),
+                        TextStyle(fontSize: 36.0, fontFamily: _pageCommonFontFamily, fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
@@ -110,10 +123,13 @@ class InfoPage extends StatelessWidget {
   }
 
   Widget Hours() {
+    var dataFontStyle = new TextStyle(fontFamily: _pageCommonFontFamily, fontSize: 14.0, fontWeight: FontWeight.w800, color: Colors.grey[700] );
+    var dataDivider = new Divider(color: Colors.grey[300], height: 1,);
+    var blankLine = new SizedBox(height: 8.0,);
     return Container(
       padding: EdgeInsets.only(top: ScreenUtil.getInstance().setHeight(119)),
       width: ScreenUtil.getInstance().setWidth(983),
-      height: ScreenUtil.getInstance().setHeight(1211),
+      // height: ScreenUtil.getInstance().setHeight(1211),
       // alignment: Alignment.center,
       // color: Colors.orangeAccent,
       child: Column(
@@ -123,86 +139,214 @@ class InfoPage extends StatelessWidget {
           Image.asset("assets/images/icon_hours.png", width:54, height: 55,),
           Padding(
             padding: const EdgeInsets.only(top: 8.0),
-            child: Text("Hours", style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.w500,),),
+            child: Text("Hours", style: TextStyle(fontSize: 24.0, fontFamily: _pageCommonFontFamily, fontWeight: FontWeight.w700,),),
           ),
-          SizedBox(height: 8.0,),
+          blankLine,
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Image.asset("assets/images/icon_remove_18dp.png",color: Colors.green,),
-              Text("  DURING SITTING WEEKS", style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w600,),),
+              Text("  DURING SITTING WEEKS", style: TextStyle(fontSize: 14.0, fontFamily: _pageCommonFontFamily, color: Colors.grey[700], fontWeight: FontWeight.w600,),),
             ],
           ),
+          blankLine,
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text("Breakfast", textAlign: TextAlign.start), ),
+              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text("Breakfast", style: dataFontStyle, textAlign: TextAlign.start), ),
               
-              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text("7am to 9am", textAlign: TextAlign.start), ),
+              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text("7am to 9am", style: dataFontStyle, textAlign: TextAlign.start), ),
               
-              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text("Tue to Thu", textAlign: TextAlign.right), ),
+              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text("Tue to Thu", style: dataFontStyle, textAlign: TextAlign.right), ),
             ],
           ),
-          Divider(color: Colors.cyan, height: 1,),
+          dataDivider,
+          blankLine,
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text("Lunch", textAlign: TextAlign.start), ),
+              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text("Lunch", style: dataFontStyle, textAlign: TextAlign.start), ),
               
-              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text("11am to 1:30pm", textAlign: TextAlign.start),),
+              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text("11am to 1:30pm", style: dataFontStyle, textAlign: TextAlign.start),),
               
-              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text("Mon to Fri", textAlign: TextAlign.right),),
+              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text("Mon to Fri", style: dataFontStyle, textAlign: TextAlign.right),),
             ],
           ),
-          Divider(color: Colors.cyan, height: 1,),
+          dataDivider,
+          blankLine,
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text("Bar menu", textAlign: TextAlign.start,),),
+              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text("Bar menu", style: dataFontStyle, textAlign: TextAlign.start,),),
               
-              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text("3pm to 5pm", textAlign: TextAlign.start),),
+              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text("3pm to 5pm", style: dataFontStyle, textAlign: TextAlign.start),),
               
-              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text("Mon to Thu", textAlign: TextAlign.right),),
+              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text("Mon to Thu", style: dataFontStyle, textAlign: TextAlign.right),),
             ],
           ),
-          Divider(color: Colors.cyan, height: 1,),
+          dataDivider,
+          blankLine,
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text("Dinner", textAlign: TextAlign.start),),
+              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text("Dinner", style: dataFontStyle, textAlign: TextAlign.start),),
               
-              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text("5pm to 8pm", textAlign: TextAlign.start),),
+              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text("5pm to 8pm", style: dataFontStyle, textAlign: TextAlign.start),),
               
-              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text("Mon to Thu", textAlign: TextAlign.right),),
+              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text("Mon to Thu", style: dataFontStyle, textAlign: TextAlign.right),),
             ],
           ),
-          Divider(color: Colors.cyan, height: 1,),
+          dataDivider,
           SizedBox(height: 40.0,),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Image.asset("assets/images/icon_remove_18dp.png",color: Colors.green,),
-              Text("  DURING RECESS WEEKS", style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w600,),),
+              Text("  DURING RECESS WEEKS", style: TextStyle(fontSize: 14.0,fontFamily: _pageCommonFontFamily, color: Colors.grey[700], fontWeight: FontWeight.w600,),),
             ],
           ),
+          blankLine,
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text("Lunch", textAlign: TextAlign.start), ),
+              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text("Lunch", style: dataFontStyle, textAlign: TextAlign.start), ),
               
-              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text("11am to 1:30pm", textAlign: TextAlign.start),),
+              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text("11am to 1:30pm", style: dataFontStyle, textAlign: TextAlign.start),),
               
-              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text(" ", textAlign: TextAlign.right),),
+              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text(" ", style: dataFontStyle, textAlign: TextAlign.right),),
             ],
           ),
-          Divider(color: Colors.cyan, height: 1,),
+          dataDivider,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text(" ", style: dataFontStyle, textAlign: TextAlign.start), ),
+              
+              SizedBox(width: ScreenUtil.getInstance().setWidth(630), child: Text("*Closed during summer brakes", style: dataFontStyle, textAlign: TextAlign.start),),
+              
+              SizedBox(width: ScreenUtil.getInstance().setWidth(10), child: Text(" ", style: dataFontStyle, textAlign: TextAlign.right),),
+            ],
+          ),
         ],
       ),
     );
+  }
+
+  Widget Payment() {
+    String title = "Payment";
+    String content = "We accept Apple Pay, credit cards, debit cards and cash.";
+
+    var dataFontStyle = new TextStyle(fontFamily: _pageCommonFontFamily, fontSize: 18.0, fontWeight: FontWeight.w300, color: Colors.grey[500] );
+    var blankLine = new SizedBox(height: 8.0,);
+
+    return Container(
+      width: ScreenUtil.getInstance().setWidth(983),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Image.asset("assets/images/icon_payment.png", width:54, height: 55,),
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: Text(title, style: TextStyle(fontSize: 24.0, fontFamily: _pageCommonFontFamily, fontWeight: FontWeight.w700,),),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 24.0, bottom: 24.0,),
+            child: Text(content, style: dataFontStyle,),
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Image.asset("assets/images/pay-ApplePay-dark.png", width: ScreenUtil.getInstance().setWidth(160), height: ScreenUtil.getInstance().setHeight(96),),
+              Image.asset("assets/images/pay-Visa-dark.png", width: ScreenUtil.getInstance().setWidth(160), height: ScreenUtil.getInstance().setHeight(96),),
+              Image.asset("assets/images/pay-MasterCard-dark.png", width: ScreenUtil.getInstance().setWidth(160), height: ScreenUtil.getInstance().setHeight(96),),
+              Image.asset("assets/images/pay-debit.png", width: ScreenUtil.getInstance().setWidth(160), height: ScreenUtil.getInstance().setHeight(96),),
+              Image.asset("assets/images/pay-cash.png", width: ScreenUtil.getInstance().setWidth(160), height: ScreenUtil.getInstance().setHeight(96),),
+            ],
+          ),
+          blankLine,
+        ],
+      ),
+    );
+
+  }
+
+  Widget Contact() {
+    String addr1 = "Room 139-N, West Block";
+    String phone1 = "613-992-2758";
+    String addr2 = "Room 130-A, West Block";
+    String phone2 = "613-992-1497";
+    String phone3 = "613-992-7407";
+
+    var dataFontStyle = new TextStyle(fontFamily: _pageCommonFontFamily, fontSize: 14.0, fontWeight: FontWeight.w800, color: Colors.grey[500] );
+    var dataDivider = new Divider(color: Colors.grey[300], height: 1,);
+    return Container(
+      padding: EdgeInsets.only(top: ScreenUtil.getInstance().setHeight(119)),
+      width: ScreenUtil.getInstance().setWidth(983),
+      // height: ScreenUtil.getInstance().setHeight(1211),
+      // alignment: Alignment.center,
+      // color: Colors.orangeAccent,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Image.asset("assets/images/icon_contact.png", width:54, height: 55,),
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: Text("Contact", style: TextStyle(fontSize: 24.0, fontFamily: _pageCommonFontFamily, fontWeight: FontWeight.w700,),),
+          ),
+          blankLine(1),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Image.asset("assets/images/icon_remove_18dp.png",color: Colors.green,),
+              Text("  PARLIAMENTARY DINING ROOM", style: TextStyle(fontSize: 14.0, fontFamily: _pageCommonFontFamily, color: Colors.grey[700], fontWeight: FontWeight.w600,),),
+            ],
+          ),
+          blankLine(3),
+          Text(addr1, style: dataFontStyle,),
+          dataDivider,
+          blankLine(1),
+          Text("Phone: "+phone1, style: dataFontStyle,),
+          blankLine(3),
+
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Image.asset("assets/images/icon_remove_18dp.png",color: Colors.green,),
+              Text("  WEST BLOCK CAFETERIA", style: TextStyle(fontSize: 14.0, fontFamily: _pageCommonFontFamily, color: Colors.grey[700], fontWeight: FontWeight.w600,),),
+            ],
+          ),
+          blankLine(3),
+          Text(addr2, style: dataFontStyle,),
+          dataDivider,
+          blankLine(1),
+          Text("Phone: "+phone2, style: dataFontStyle,),
+          blankLine(3),
+
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Image.asset("assets/images/icon_remove_18dp.png",color: Colors.green,),
+              Text("  CATERING SERVICE", style: TextStyle(fontSize: 14.0, fontFamily: _pageCommonFontFamily, color: Colors.grey[700], fontWeight: FontWeight.w600,),),
+            ],
+          ),
+          blankLine(3),
+          Text("Phone: "+phone3, style: dataFontStyle,),
+          blankLine(24),
+
+        ],
+      ),
+    );
+  }
+
+  SizedBox blankLine(int lines){
+    return SizedBox(height: 8.0 * lines,);
   }
 }
