@@ -6,6 +6,7 @@ import 'package:parl_cuision/authentication/authentication.dart';
 import 'package:parl_cuision/common/common.dart';
 import 'package:parl_cuision/information/information.dart';
 import 'package:parl_cuision/menu/menu.dart';
+import 'package:parl_cuision/reservation/reservation_page.dart';
 //import 'package:parl_cuision/reservation/reservation.dart';
 
 
@@ -22,7 +23,8 @@ class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
   final List<Widget> _children = [
     MenuPage(),
-    PlaceholderWidget(Colors.orange),
+    ReservationPage(),
+    //PlaceholderWidget(Colors.orange),
     InfoPage(),
     PlaceholderWidget(Colors.green)
   ];
