@@ -4,8 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_date_pickers/flutter_date_pickers.dart' as dp;
 
 import 'package:parl_cuision/common/common.dart';
-import 'package:parl_cuision/reservation/reservation.dart';
-import 'package:parl_cuision/reservation/steps_page.dart';
 
 class ReservSteps extends StatefulWidget {
   @override
