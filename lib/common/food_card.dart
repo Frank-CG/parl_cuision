@@ -16,7 +16,7 @@ class FoodCard extends StatelessWidget {
 
   Image foodImg;
   String name;
-  String price;
+  double price;
   int count;
 
   @override
@@ -45,50 +45,56 @@ class FoodCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
-                    child: Text(name),
+                    padding: EdgeInsets.only(left: ScreenUtil.getInstance().setWidth(60),),
+                    child: Text(name, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500,),),
                   ),
-                  Row(
-                    children: <Widget>[
-                      Container(
-                        child: ButtonTheme(
-                          minWidth: ScreenUtil.getInstance().setWidth(30),
-                          height: 30,
-                          child: RaisedButton(
-                            color: Colors.green,
-                            textColor: Colors.white,
-                            shape: new RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(30.0)),
-                            child: Text("-"),
-                            onPressed: () {},
+                  Container(
+                    padding: EdgeInsets.only(left: ScreenUtil.getInstance().setWidth(30),),
+                    child: Row(
+                      children: <Widget>[
+                        Container(
+                          child: ButtonTheme(
+                            minWidth: ScreenUtil.getInstance().setWidth(30),
+                            height: 30,
+                            child: RaisedButton(
+                              color: Colors.green,
+                              textColor: Colors.white,
+                              shape: new RoundedRectangleBorder(
+                                  borderRadius: new BorderRadius.circular(30.0)),
+                              child: Text("-"),
+                              onPressed: () {},
+                            ),
                           ),
                         ),
-                      ),
-                      Container(
-                        child: Text("0"),
-                      ),
-                      Container(
-                        child: ButtonTheme(
-                          minWidth: ScreenUtil.getInstance().setWidth(30),
-                          height: 30,
-                          child: RaisedButton(
-                            color: Colors.green,
-                            textColor: Colors.white,
-                            shape: new RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(30.0)),
-                            child: Text("+"),
-                            onPressed: () {},
+                        Container(
+                          padding: EdgeInsets.only(left: ScreenUtil.getInstance().setWidth(20),
+                          right: ScreenUtil.getInstance().setWidth(20),),
+                          child: Text(count.toString()),
+                        ),
+                        Container(
+                          child: ButtonTheme(
+                            minWidth: ScreenUtil.getInstance().setWidth(30),
+                            height: 30,
+                            child: RaisedButton(
+                              color: Colors.green,
+                              textColor: Colors.white,
+                              shape: new RoundedRectangleBorder(
+                                  borderRadius: new BorderRadius.circular(30.0)),
+                              child: Text("+"),
+                              onPressed: () {},
+                            ),
                           ),
                         ),
-                      )
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),
             ),
             Container(
               width: ScreenUtil.getInstance().setWidth(130),
-              color: Colors.yellow,
-              child: Text(price),
+              // color: Colors.yellow,
+              child: Text("\$"+(price*count).toString()),
             ),
           ],
         ),

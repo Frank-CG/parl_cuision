@@ -183,7 +183,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
               ),
             ),
           ),
-          FoodCard(foodImg: Image.asset("assets/images/food1.png"), name: "House soup", price: "\$7", count: 2,),
+          FoodCard(foodImg: Image.asset("assets/images/food1.png"), name: "House soup", price: 7.00, count: 2,),
+          FoodCard(foodImg: Image.asset("assets/images/food2.png"), name: "Caesar salad", price: 8.00, count: 1,),
         ],
       ),
     );
