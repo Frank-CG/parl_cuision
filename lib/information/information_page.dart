@@ -67,7 +67,7 @@ class InfoPage extends StatelessWidget {
                   child: Text(
                     "Information",
                     style:
-                        TextStyle(fontSize: 36.0, fontFamily: _pageCommonFontFamily, fontWeight: FontWeight.bold),
+                        TextStyle(fontSize: ScreenUtil.getInstance().setSp(110.0), fontFamily: _pageCommonFontFamily, fontWeight: FontWeight.bold),
                   ),
                 ),
               ),

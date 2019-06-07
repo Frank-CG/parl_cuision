@@ -3,30 +3,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:parl_cuision/authentication/authentication.dart';
+import 'package:parl_cuision/checkout/checkout_page.dart';
 import 'package:parl_cuision/common/common.dart';
 import 'package:parl_cuision/information/information.dart';
 import 'package:parl_cuision/menu/menu.dart';
 import 'package:parl_cuision/reservation/reservation_page.dart';
 //import 'package:parl_cuision/reservation/reservation.dart';
 
-
-
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => new _HomePageState();
-  
 }
 
-
 class _HomePageState extends State<HomePage> {
-
   int _currentIndex = 0;
   final List<Widget> _children = [
     MenuPage(),
     ReservationPage(),
     //PlaceholderWidget(Colors.orange),
     InfoPage(),
-    PlaceholderWidget(Colors.green)
+    // PlaceholderWidget(Colors.green)
+    CheckoutPage(),
   ];
 
   @override
@@ -37,33 +34,74 @@ class _HomePageState extends State<HomePage> {
     print(MediaQuery.of(context).size.height);
     print(MediaQuery.of(context).size.width);
 
+    Color selectedColor = Colors.green;
+    Color unselectedColor = Colors.black;
+    Color disabledColor = Colors.grey;
+
+    Color itemColor = unselectedColor;
+
+    List<BottomNavigationBarItem> barItems = <BottomNavigationBarItem>[];
+    List<String> barItemsTitle = <String>["Menu", "Resv", "Info", "Cart"];
+    List<String> barItemsIcon = <String>[
+      'assets/images/icon_menu.png',
+      'assets/images/icon_reservation.png',
+      'assets/images/icon_info.png',
+      'assets/images/icon_cart.png',
+    ];
+    for (int i = 0; i < 4; i++) {
+      if (i == _currentIndex) {
+        itemColor = selectedColor;
+      }else{
+        itemColor = unselectedColor;
+      }
+      if (_currentIndex > 0 && i == 3) {
+        itemColor = disabledColor;
+      }
+
+      barItems.add(BottomNavigationBarItem(
+          icon: getImageIconBox(barItemsIcon[i], itemColor),
+          title: Text(barItemsTitle[i])));
+    }
+
+    var bottomBar = _currentIndex < 4
+        ? BottomNavigationBar(
+            onTap: onTabTapped,
+            currentIndex: _currentIndex,
+            // iconSize: 18.0,
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            items: barItems,
+          )
+        : null;
+
     return Scaffold(
       body: _children[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-          onTap: onTabTapped,
-          currentIndex: _currentIndex,
-          // iconSize: 18.0,
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          items: [
-            new BottomNavigationBarItem(icon: getImageIconBox('assets/images/icon_menu.png'), title: Text("Menu")),
-            new BottomNavigationBarItem(icon: getImageIconBox("assets/images/icon_reservation.png"),title: Text("Resv")),
-            new BottomNavigationBarItem(icon: getImageIconBox("assets/images/icon_info.png"), title: Text("Info")),
-            new BottomNavigationBarItem(icon: getImageIconBox("assets/images/icon_cart.png"), title: Text("Cart")),
-          ],
-      ),
+      bottomNavigationBar: bottomBar,
     );
   }
 
   void onTabTapped(int index) {
-    setState(() {
-     _currentIndex = index;
-    });
+    if(_currentIndex > 0 && index == 3){
+      return;
+    }
+    if (index < 3) {
+      setState(() {
+        _currentIndex = index;
+      });
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => CheckoutPage()),
+      );
+    }
   }
 
-  Widget getImageIconBox(String path){
+  Widget getImageIconBox(String path, Color cl) {
     return SizedBox(
-      child: Image.asset(path),
+      child: Image.asset(
+        path,
+        color: cl,
+      ),
       width: 24,
       height: 24,
     );

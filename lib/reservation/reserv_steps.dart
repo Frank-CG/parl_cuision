@@ -2,8 +2,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_date_pickers/flutter_date_pickers.dart' as dp;
-
-import 'package:parl_cuision/common/common.dart';
+import 'package:intl/intl.dart';
+import 'package:parl_cuision/reservation/custom_picker.dart';
 
 class ReservSteps extends StatefulWidget {
   @override
@@ -17,10 +17,13 @@ class _ReservStepsState extends State<ReservSteps> {
   int current_step = 0;
   double _kStepSize = 24.0;
   int _guestNumber = 1;
-  String _dateValue = '';
   DateTime _selectedDate;
   DateTime _firstDate;
   DateTime _lastDate;
+  int _hour = 0;
+  int _minute = 0;
+
+  List<String> _stepTitles = <String>["GUESTS", "DATE", "TIME", "SUMMARY"];
 
   @override
   void initState() {
@@ -29,9 +32,11 @@ class _ReservStepsState extends State<ReservSteps> {
     _selectedDate = DateTime.now();
     _firstDate = DateTime.now().subtract(Duration(days: 45));
     _lastDate = DateTime.now().add(Duration(days: 45));
+    _hour = DateTime.now().hour;
+    _minute = DateTime.now().minute;
   }
 
-  List<String> _stepTitles = <String>["GUESTS", "DATE", "TIME", "SUMMARY"];
+  
 
   @override
   Widget build(BuildContext context) {
@@ -80,6 +85,10 @@ class _ReservStepsState extends State<ReservSteps> {
   // }
 
   Widget _getNextButton() {
+    String buttonText = "Next Step";
+    if(current_step == steps_count - 1){
+      buttonText = "Reserve";
+    }
     return Container(
       child: ButtonTheme(
         minWidth: ScreenUtil.getInstance().setWidth(850),
@@ -88,7 +97,7 @@ class _ReservStepsState extends State<ReservSteps> {
           textColor: Colors.white,
           shape: new RoundedRectangleBorder(
               borderRadius: new BorderRadius.circular(10.0)),
-          child: Text("Next Step"),
+          child: Text(buttonText),
           onPressed: () {
             nextStep();
           },
@@ -415,46 +424,120 @@ class _ReservStepsState extends State<ReservSteps> {
   }
 
   Widget _getStepPageContent3() {
+    List<String> _hours = <String>["11", "12", "13", "14", "15"];
+    List<String> _minutes = <String>["00", "15", "30", "45"];
     return Container(
-      height: 250,
-      width: 330,
       margin: EdgeInsets.only(
-        bottom: 20,
-        top: 10,
+        bottom: 30.0,
       ),
       child: Column(
         children: <Widget>[
+          _getSelectedTime(),
+          _getCustomPicker("HOURS", _hours),
+          _getCustomPicker("MINUTES", _minutes),
+        ],
+      ),
+    );
+  }
+
+  Widget _getSelectedTime() {
+    String sTime = _getSelectedTimeFormated();
+    TextStyle timeStyle = TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize: 50.0,
+    );
+    return Container(
+      margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
+      child: Text(
+        sTime,
+        style: timeStyle,
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
+
+  String _getSelectedTimeFormated() {
+    String result = "";
+    String temp = "";
+    temp = "0" + _hour.toString();
+    result += temp.substring(temp.length - 2);
+    result += ":";
+    temp = "0" + _minute.toString();
+    result += temp.substring(temp.length - 2);
+    return result;
+  }
+
+  Widget _getCustomPicker(String title, List<String> options) {
+    return CustomPicker(title, options, _customPickerCallback);
+  }
+
+  void _customPickerCallback(String selectedValue) {
+    print(selectedValue);
+    var temp = selectedValue.split(":");
+    int value = int.parse(temp[1]);
+    if (temp[0] == "HOURS") {
+      setState(() {
+        _hour = value;
+      });
+    } else if (temp[0] == "MINUTES") {
+      setState(() {
+        _minute = value;
+      });
+    }
+  }
+
+  Widget _getStepPageContent4() {
+    return Container(
+      margin: EdgeInsets.only(
+        top: 30.0, bottom: 40.0,
+      ),
+      // color: Colors.lightGreen[300],
+      child: Column(
+        children: <Widget>[
           Container(
-            padding: EdgeInsets.only(top:20,),
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.grey[300],
-                width: 1.0,
-              ),
-              borderRadius: new BorderRadius.all(new Radius.circular(20.0)),
+            margin: EdgeInsets.only(bottom: 20.0,),
+            child: Image.asset(
+              "assets/images/icon_summary.png",
+              width: ScreenUtil.getInstance().setWidth(216),
             ),
-            // child: ButtonTheme(
-            //   minWidth: 260,
-            //   child: RaisedButton(
-            //     color: Colors.transparent,
-            //     shape: new RoundedRectangleBorder(
-            //         borderRadius: new BorderRadius.circular(30.0)),
-            //     onPressed: () {},
-            //   ),
-            // ),
+          ),
+          Text(
+            _getDateFormated(),
+            style: TextStyle(
+              fontSize: 20.0,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+          Text(
+            _getSelectedTimeFormated(),
+            style: TextStyle(
+              fontSize: 70.0,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          Text(
+            "$_guestNumber person",
+            style: TextStyle(
+              fontSize: 16.0,
+              fontFamily: _pageCommonFontFamily,
+              color: Colors.grey.shade600,
+            ),
           ),
         ],
       ),
     );
   }
 
-  Widget _getStepPageContent4() {
-    return PlaceholderWidget(Colors.green[300]);
+  String _getDateFormated() {
+    var formatter = new DateFormat('yMMMMd');
+    return formatter.format(_selectedDate);
   }
 
   void nextStep() {
     setState(() {
-      current_step++;
+      if(current_step < steps_count-1){
+        current_step++;
+      }
     });
   }
 }

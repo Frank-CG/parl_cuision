@@ -5,8 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-
-
 Future<List<Food>> fetchFoods(http.Client client) async {
   final response =
       await client.get('https://jsonplaceholder.typicode.com/photos');
@@ -43,32 +41,32 @@ class Food {
 }
 
 class FoodCardList extends StatefulWidget {
-  
   @override
   State<FoodCardList> createState() => _FoodCardListState();
 }
 
 class _FoodCardListState extends State<FoodCardList> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
         child: FutureBuilder<List<Food>>(
           future: fetchFoods(http.Client()),
-          builder: (context,snapshot) {
+          builder: (context, snapshot) {
             if (snapshot.hasError) print(snapshot.error);
 
-            return snapshot.hasData ? FoodList(foods: snapshot.data) : Center(child: CircularProgressIndicator(),);
+            return snapshot.hasData
+                ? FoodList(foods: snapshot.data)
+                : Center(
+                    child: CircularProgressIndicator(),
+                  );
           },
         ),
         padding: EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 20.0),
       ),
     );
   }
-  
 }
-
 
 class FoodList extends StatelessWidget {
   final List<Food> foods;
@@ -83,42 +81,78 @@ class FoodList extends StatelessWidget {
         return Column(
           children: <Widget>[
             Container(
-                constraints: BoxConstraints.expand(
-                  // height: Theme.of(context).textTheme.display1.fontSize * 1.1 + 70.0,
-                  height: 98,
-                ),
-                color: Colors.white10,
-                alignment: Alignment.center,
-                child: Card(
-                  // shape: RoundedRectangleBorder(
-                  //   borderRadius: BorderRadius.circular(18.0),
-                  // ),
-                  child: Row(children: <Widget>[
+              constraints: BoxConstraints.expand(
+                // height: Theme.of(context).textTheme.display1.fontSize * 1.1 + 70.0,
+                height: 98,
+              ),
+              color: Colors.white10,
+              alignment: Alignment.center,
+              child: Card(
+                // shape: RoundedRectangleBorder(
+                //   borderRadius: BorderRadius.circular(18.0),
+                // ),
+                child: Row(
+                  children: <Widget>[
                     Container(
-                      child: Column(children: <Widget>[Image.asset("assets/images/food1.png", fit: BoxFit.cover, width: 90, height: 90,),],),
+                      child: Column(
+                        children: <Widget>[
+                          Image.asset(
+                            "assets/images/food1.png",
+                            fit: BoxFit.cover,
+                            width: 90,
+                            height: 90,
+                          ),
+                        ],
+                      ),
                     ),
                     Container(
-                      padding: EdgeInsets.only(left: 10,top: 20,),
+                      padding: EdgeInsets.only(
+                        left: 10,
+                        top: 20,
+                      ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Container(
                             child: Row(
                               children: <Widget>[
-                                SizedBox(width: 20.0,),
-                                Text("House soup",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w400),),
-                                SizedBox(width: 40.0,),
+                                SizedBox(
+                                  width: 20.0,
+                                ),
+                                Text(
+                                  "House soup",
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w400),
+                                ),
+                                SizedBox(
+                                  width: 40.0,
+                                ),
                                 Icon(Icons.expand_more),
-                                SizedBox(width: 20.0,),
+                                SizedBox(
+                                  width: 20.0,
+                                ),
                               ],
                             ),
                           ),
                           Container(
                             child: Row(
                               children: <Widget>[
-                                SizedBox(width: 20.0,),
-                                Text("\$7",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600, color: Colors.green,),),
-                                Icon(Icons.event_busy, color: Colors.green,),
+                                SizedBox(
+                                  width: 20.0,
+                                ),
+                                Text(
+                                  "\$7",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.green,
+                                  ),
+                                ),
+                                Icon(
+                                  Icons.event_busy,
+                                  color: Colors.green,
+                                ),
                               ],
                             ),
                           ),
@@ -127,21 +161,44 @@ class FoodList extends StatelessWidget {
                     ),
                     Expanded(
                       child: Container(
-                        decoration: BoxDecoration(border: Border(left: BorderSide(color: Colors.grey,width: 1,))),
+                        decoration: BoxDecoration(
+                            border: Border(
+                                left: BorderSide(
+                          color: Colors.grey,
+                          width: 1,
+                        ))),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
-                            Icon(Icons.add, color: Colors.green,),
-                            Divider(color: Colors.grey,height: .6,),
-                            Text("0",style: TextStyle(fontSize: 18, color: Colors.green),),
-                            Divider(color: Colors.grey,height: .6,),
-                            Icon(Icons.remove, color: Colors.green,),
+                            Icon(
+                              Icons.add,
+                              color: Colors.green,
+                            ),
+                            Divider(
+                              color: Colors.grey,
+                              height: .6,
+                            ),
+                            Text(
+                              "0",
+                              style:
+                                  TextStyle(fontSize: 18, color: Colors.green),
+                            ),
+                            Divider(
+                              color: Colors.grey,
+                              height: .6,
+                            ),
+                            Icon(
+                              Icons.remove,
+                              color: Colors.green,
+                            ),
                           ],
                         ),
                       ),
                     ),
-                  ],),
-                )),
+                  ],
+                ),
+              ),
+            ),
             // SizedBox(height: 20,),
           ],
         );
@@ -149,14 +206,18 @@ class FoodList extends StatelessWidget {
     );
   }
 
-  Widget getNetworkImage(int index){
-    if(index == 0){
-      return Image.asset("assets/images/food1.png", fit: BoxFit.cover, height: 100,);
-    }else{
+  Widget getNetworkImage(int index) {
+    if (index == 0) {
+      return Image.asset(
+        "assets/images/food1.png",
+        fit: BoxFit.cover,
+        height: 100,
+      );
+    } else {
       return Image.network(
-                          foods[index].thumbnailUrl,
-                          fit: BoxFit.cover,
-                        );
+        foods[index].thumbnailUrl,
+        fit: BoxFit.cover,
+      );
     }
   }
 }
