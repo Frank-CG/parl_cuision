@@ -110,7 +110,8 @@ class _MenuFoodCardState extends State<MenuFoodCard> {
               child: Icon(Icons.expand_more),
             ),
             Container(
-              width: ScreenUtil.getInstance().setWidth(100),
+              width: ScreenUtil.getInstance().setWidth(105),
+              height: ScreenUtil.getInstance().setHeight(370),
               decoration: BoxDecoration(
                 border: Border(
                   left: BorderSide(
@@ -121,44 +122,58 @@ class _MenuFoodCardState extends State<MenuFoodCard> {
               ),
               child: Container(
                 child: Column(
-                  // crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  // crossAxisAlignment: CrossAxisAlignment.stretch,
+                  // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          foodCount++;
-                        });
-                      },
-                      child: Container(
-                        child: Icon(
-                          Icons.add,
-                          color: Colors.green,
+                    Container(
+                      color: Colors.lightGreen[100],
+                      width: ScreenUtil.getInstance().setWidth(105),
+                      height: ScreenUtil.getInstance().setHeight(114),
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            foodCount++;
+                          });
+                        },
+                        child: Container(
+                          child: Icon(
+                            Icons.add,
+                            color: Colors.green,
+                          ),
                         ),
                       ),
                     ),
                     Divider(
                       color: Colors.grey.shade400,
-                      height: .6,
+                      height: ScreenUtil.getInstance().setHeight(2),
                     ),
-                    Text(
-                      foodCount.toString(),
-                      style: TextStyle(fontSize: 18, color: Colors.green),
+                    Container(
+                      height: ScreenUtil.getInstance().setHeight(110),
+                      alignment: Alignment.center,
+                      child: Text(
+                        foodCount.toString(),
+                        style: TextStyle(fontSize: 18, color: Colors.green),
+                      ),
                     ),
                     Divider(
                       color: Colors.grey.shade400,
-                      height: .6,
+                      height: ScreenUtil.getInstance().setHeight(2),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          if (foodCount > 0) foodCount--;
-                        });
-                      },
-                      child: Container(
-                        child: Icon(
-                          Icons.remove,
-                          color: Colors.green,
+                    Container(
+                      color: Colors.lightGreen[100],
+                      width: ScreenUtil.getInstance().setWidth(105),
+                      height: ScreenUtil.getInstance().setHeight(115),
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            if (foodCount > 0) foodCount--;
+                          });
+                        },
+                        child: Container(
+                          child: Icon(
+                            Icons.remove,
+                            color: Colors.green,
+                          ),
                         ),
                       ),
                     ),

@@ -2,11 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:parl_cuision/authentication/authentication.dart';
+import 'package:parl_cuision/profile/profile.dart';
 
 import 'menu_foodlist.dart';
 import 'package:screen/screen.dart';
 
 class MenuPage extends StatefulWidget {
+  // MenuPage({
+  //   Key key,
+  //   this.menuCallback,
+  // }) : super(key: key);
+
+  Function() menuCallback;
+
+  MenuPage(this.menuCallback);
+
   @override
   _MenuPageState createState() => new _MenuPageState();
 }
@@ -30,7 +40,7 @@ class _MenuPageState extends State<MenuPage> {
 
     final AuthenticationBloc authenticationBloc =
         BlocProvider.of<AuthenticationBloc>(context);
-    
+
     Screen.keepOn(true);
 
     return Scaffold(
@@ -48,9 +58,51 @@ class _MenuPageState extends State<MenuPage> {
                 color: Colors.white,
                 child: Text(
                   "Menu",
-                  style: TextStyle(fontSize: 36.0, fontWeight: FontWeight.bold, fontFamily: _defaultFontFamily,),
+                  style: TextStyle(
+                    fontSize: 36.0,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: _defaultFontFamily,
+                  ),
                 ),
               ),
+
+              // Container(
+              //   color: Colors.white,
+              //   child: Row(
+              //     children: <Widget>[
+              //       Container(
+              //         width: ScreenUtil.getInstance().setWidth(680),
+              //         height: ScreenUtil.getInstance().setHeight(333),
+              //         alignment: Alignment.bottomLeft,
+              //         child: Padding(
+              //           padding: const EdgeInsets.only(
+              //             left: 24.0,
+              //           ),
+              //           child: Text(
+              //             "Menu",
+              //             style: TextStyle(
+              //                 fontSize: ScreenUtil.getInstance().setSp(110.0),
+              //                 fontFamily: _defaultFontFamily,
+              //                 fontWeight: FontWeight.bold),
+              //           ),
+              //         ),
+              //       ),
+              //       Container(
+              //         width: ScreenUtil.getInstance().setWidth(445),
+              //         height: ScreenUtil.getInstance().setHeight(333),
+              //         alignment: Alignment.bottomRight,
+              //         child: Container(
+              //           alignment: Alignment.bottomRight,
+              //           child: Image.asset(
+              //             "assets/images/nav.png",
+              //             height: ScreenUtil.getInstance().setHeight(176 * 1.2),
+              //             width: ScreenUtil.getInstance().setWidth(247 * 1.2),
+              //           ),
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
 
               Container(
                 height: ScreenUtil.getInstance().setHeight(180),
@@ -77,7 +129,7 @@ class _MenuPageState extends State<MenuPage> {
                 padding: EdgeInsets.only(
                   left: 12.0,
                   top: 0.0,
-                ),                
+                ),
                 alignment: Alignment.centerLeft,
                 decoration: new BoxDecoration(
                     color: Colors.white,
@@ -258,11 +310,25 @@ class _MenuPageState extends State<MenuPage> {
             ],
           ),
           Positioned(
-            top: ScreenUtil.getInstance().setHeight(150),
+            top: ScreenUtil.getInstance().setHeight(180),
             right: 0.0,
             child: Container(
               child: Image.asset(
                 "assets/images/menu_plate.png",
+              ),
+            ),
+          ),
+          Positioned(
+            top: ScreenUtil.getInstance().setHeight(130),
+            right: 0.0,
+            child: GestureDetector(
+              onTap: profileOnTap,
+              child: Container(
+                child: Image.asset(
+                  "assets/images/nav.png",
+                  height: ScreenUtil.getInstance().setHeight(176 * 1.2),
+                  width: ScreenUtil.getInstance().setWidth(247 * 1.2),
+                ),
               ),
             ),
           ),
@@ -276,5 +342,19 @@ class _MenuPageState extends State<MenuPage> {
       //   ),
       // ),
     );
+  }
+
+  void profileOnTap() {
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(builder: (context) => SettingsPage()),
+    // );
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder: (context) => SettingsPage(),
+    //   ),
+    // );
+    widget.menuCallback();
   }
 }

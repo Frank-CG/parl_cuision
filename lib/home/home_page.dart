@@ -8,6 +8,7 @@ import 'package:parl_cuision/checkout/checkout_page.dart';
 import 'package:parl_cuision/common/common.dart';
 import 'package:parl_cuision/information/information.dart';
 import 'package:parl_cuision/menu/menu.dart';
+import 'package:parl_cuision/profile/profile_page.dart';
 import 'package:parl_cuision/reservation/reservation_page.dart';
 //import 'package:parl_cuision/reservation/reservation.dart';
 
@@ -18,23 +19,31 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
-  final List<Widget> _children = [
-    MenuPage(),
-    ReservationPage(),
-    //PlaceholderWidget(Colors.orange),
-    InfoPage(),
-    // PlaceholderWidget(Colors.green)
-    CheckoutPage(),
-  ];
+
+  void _menuCallback() {
+    setState(() {
+      _currentIndex = 4;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     ScreenUtil.instance =
         ScreenUtil(width: 1125, height: 2436, allowFontScaling: true)
           ..init(context);
-          
+
     final AuthenticationBloc authenticationBloc =
         BlocProvider.of<AuthenticationBloc>(context);
+
+    final List<Widget> _children = [
+      MenuPage(_menuCallback),
+      ReservationPage(),
+      //PlaceholderWidget(Colors.orange),
+      InfoPage(),
+      // PlaceholderWidget(Colors.green)
+      CheckoutPage(),
+      SettingsPage(),
+    ];
 
     print(MediaQuery.of(context).size.height);
     print(MediaQuery.of(context).size.width);
@@ -77,7 +86,14 @@ class _HomePageState extends State<HomePage> {
             showUnselectedLabels: false,
             items: barItems,
           )
-        : null;
+        : BottomNavigationBar(
+            onTap: onTabTapped,
+            currentIndex: 0,
+            // iconSize: 18.0,
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            items: barItems,
+          );
 
     return Scaffold(
       body: _children[_currentIndex],
@@ -85,6 +101,16 @@ class _HomePageState extends State<HomePage> {
         height: ScreenUtil.getInstance().setHeight(180),
         child: bottomBar,
       ),
+      // floatingActionButton: FloatingActionButton.extended(
+      //   onPressed: () {},
+      //   // icon: Icon(Icons.save),
+
+      //   label: Image.asset(
+      //     "assets/images/nav.png",
+      //     height: ScreenUtil.getInstance().setHeight(176 * 1.2),
+      //     width: ScreenUtil.getInstance().setWidth(247 * 1.2),
+      //   ),
+      // ),
     );
   }
 

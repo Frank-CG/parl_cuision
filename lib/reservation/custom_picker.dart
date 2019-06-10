@@ -35,7 +35,7 @@ class _CustomPickerState extends State<CustomPicker> {
   void _itemOnSelected(int index) {
     setState(() {
       _selectedIndex = index;
-      widget.callback(widget._title+":"+widget._options[index]);
+      widget.callback(widget._title + ":" + widget._options[index]);
     });
   }
 
@@ -49,7 +49,13 @@ class _CustomPickerState extends State<CustomPicker> {
         _itemOnSelected(index);
       },
       child: Container(
-        decoration: new BoxDecoration(color: decorationColor),
+        width: 40.0,
+        height: 30.0,
+        alignment: Alignment.center,
+        decoration: new BoxDecoration(
+          color: decorationColor,
+          borderRadius: BorderRadius.all(const Radius.circular(30.0)),
+        ),
         child: new Text(
           widget._options[index],
           style: contentStyle,
@@ -68,7 +74,10 @@ class _CustomPickerState extends State<CustomPicker> {
       children: <Widget>[
         Container(
           margin: EdgeInsets.fromLTRB(25, 20, 25, 10),
-          child: Text(widget._title,style: titleStyle,),
+          child: Text(
+            widget._title,
+            style: titleStyle,
+          ),
         ),
         Container(
           margin: EdgeInsets.fromLTRB(25, 0, 25, 0),

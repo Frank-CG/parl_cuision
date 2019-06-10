@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as http;
 import 'package:parl_cuision/menu/menu_foodcard.dart';
 
@@ -76,6 +77,10 @@ class FoodList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.instance =
+        ScreenUtil(width: 1125, height: 2436, allowFontScaling: true)
+          ..init(context);
+
     List<String> test_foodNames = <String>[
       "House soup",
       "Caesar salad",
@@ -89,7 +94,10 @@ class FoodList extends StatelessWidget {
           children: <Widget>[
             MenuFoodCard(
               foodImg: Image.asset(
-                  "assets/images/food" + (index % 3 + 1).toString() + ".png"),
+                "assets/images/food" + (index % 3 + 1).toString() + ".png",
+                height: ScreenUtil.getInstance().setHeight(370),
+                width: ScreenUtil.getInstance().setWidth(282),
+              ),
               name: test_foodNames[index % 3],
               price: 7.00 + index % 5,
               index: index,
