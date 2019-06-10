@@ -8,7 +8,7 @@ import 'package:parl_cuision/checkout/checkout_page.dart';
 import 'package:parl_cuision/common/common.dart';
 import 'package:parl_cuision/information/information.dart';
 import 'package:parl_cuision/menu/menu.dart';
-import 'package:parl_cuision/profile/profile_page.dart';
+import 'package:parl_cuision/profile/profile.dart';
 import 'package:parl_cuision/reservation/reservation_page.dart';
 //import 'package:parl_cuision/reservation/reservation.dart';
 
