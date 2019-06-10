@@ -12,6 +12,8 @@ class MenuPage extends StatefulWidget {
 }
 
 class _MenuPageState extends State<MenuPage> {
+  String _defaultFontFamily = "Nunito Sans";
+
   bool _filterItem1 = true;
   bool _filterItem2 = true;
   bool _filterItem3 = true;
@@ -37,7 +39,7 @@ class _MenuPageState extends State<MenuPage> {
           Column(
             children: [
               Container(
-                height: ScreenUtil.getInstance().setHeight(280),
+                height: ScreenUtil.getInstance().setHeight(330),
                 padding: EdgeInsets.only(
                   left: ScreenUtil.getInstance().setWidth(63),
                   top: ScreenUtil.getInstance().setHeight(150),
@@ -46,14 +48,15 @@ class _MenuPageState extends State<MenuPage> {
                 color: Colors.white,
                 child: Text(
                   "Menu",
-                  style: TextStyle(fontSize: 36.0, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 36.0, fontWeight: FontWeight.bold, fontFamily: _defaultFontFamily,),
                 ),
               ),
 
               Container(
+                height: ScreenUtil.getInstance().setHeight(180),
                 padding: EdgeInsets.only(
                   left: ScreenUtil.getInstance().setWidth(63),
-                  top: ScreenUtil.getInstance().setHeight(150),
+                  top: ScreenUtil.getInstance().setHeight(60),
                   bottom: ScreenUtil.getInstance().setHeight(57),
                 ),
                 alignment: Alignment.topLeft,
@@ -61,20 +64,20 @@ class _MenuPageState extends State<MenuPage> {
                 child: Text(
                   "Filters",
                   style: TextStyle(
-                    color: Colors.grey,
+                    color: Colors.grey[600],
                     fontSize: 14.0,
                     fontWeight: FontWeight.w600,
+                    fontFamily: _defaultFontFamily,
                   ),
                 ),
               ),
 
               Container(
+                height: ScreenUtil.getInstance().setHeight(240),
                 padding: EdgeInsets.only(
                   left: 12.0,
                   top: 0.0,
-                ),
-                margin: EdgeInsets.all(0.0),
-                height: 80,
+                ),                
                 alignment: Alignment.centerLeft,
                 decoration: new BoxDecoration(
                     color: Colors.white,
@@ -222,9 +225,10 @@ class _MenuPageState extends State<MenuPage> {
               ),
 
               Container(
-                margin: EdgeInsets.only(
-                  top: 20.0,
-                  left: 20.0,
+                height: ScreenUtil.getInstance().setHeight(140),
+                padding: EdgeInsets.only(
+                  top: ScreenUtil.getInstance().setHeight(60),
+                  left: ScreenUtil.getInstance().setHeight(60),
                 ),
                 child: Row(
                   children: <Widget>[
@@ -240,16 +244,21 @@ class _MenuPageState extends State<MenuPage> {
                 ),
               ),
 
-              Expanded(
-                child: Container(
-                  child: FoodCardList(),
-                ),
+              Container(
+                height: ScreenUtil.getInstance().setHeight(1360),
+                child: FoodCardList(),
               ),
+
+              // Expanded(
+              //   child: Container(
+              //     child: FoodCardList(),
+              //   ),
+              // ),
               // Expanded(child: Container(color: Colors.cyan,),),
             ],
           ),
           Positioned(
-            top: 50,
+            top: ScreenUtil.getInstance().setHeight(150),
             right: 0.0,
             child: Container(
               child: Image.asset(

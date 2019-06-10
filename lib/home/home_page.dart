@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:parl_cuision/authentication/authentication.dart';
 import 'package:parl_cuision/checkout/checkout_page.dart';
@@ -51,7 +52,7 @@ class _HomePageState extends State<HomePage> {
     for (int i = 0; i < 4; i++) {
       if (i == _currentIndex) {
         itemColor = selectedColor;
-      }else{
+      } else {
         itemColor = unselectedColor;
       }
       if (_currentIndex > 0 && i == 3) {
@@ -76,12 +77,15 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       body: _children[_currentIndex],
-      bottomNavigationBar: bottomBar,
+      bottomNavigationBar: Container(
+        height: ScreenUtil.getInstance().setHeight(180),
+        child: bottomBar,
+      ),
     );
   }
 
   void onTabTapped(int index) {
-    if(_currentIndex > 0 && index == 3){
+    if (_currentIndex > 0 && index == 3) {
       return;
     }
     if (index < 3) {

@@ -51,19 +51,22 @@ class _MenuFoodCardState extends State<MenuFoodCard> {
       margin: EdgeInsets.fromLTRB(ScreenUtil.getInstance().setWidth(63), 0,
           ScreenUtil.getInstance().setWidth(63), 0),
       width: ScreenUtil.getInstance().setWidth(999),
+      height: ScreenUtil.getInstance().setHeight(370),
       child: Card(
         child: Row(
           children: <Widget>[
             Container(
               width: ScreenUtil.getInstance().setWidth(282),
+              height: ScreenUtil.getInstance().setHeight(370),
               child: widget.foodImg,
             ),
             Container(
               width: ScreenUtil.getInstance().setWidth(500),
+              height: ScreenUtil.getInstance().setHeight(370),
               color: Colors.white,
               alignment: Alignment.topLeft,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
@@ -81,6 +84,7 @@ class _MenuFoodCardState extends State<MenuFoodCard> {
                   Container(
                     padding: EdgeInsets.only(
                       left: ScreenUtil.getInstance().setWidth(60),
+                      top: ScreenUtil.getInstance().setHeight(20),
                     ),
                     child: Row(
                       children: <Widget>[
@@ -110,8 +114,8 @@ class _MenuFoodCardState extends State<MenuFoodCard> {
               decoration: BoxDecoration(
                 border: Border(
                   left: BorderSide(
-                    color: Colors.grey,
-                    width: 1,
+                    color: Colors.grey.shade400,
+                    width: 0.6,
                   ),
                 ),
               ),
@@ -121,16 +125,20 @@ class _MenuFoodCardState extends State<MenuFoodCard> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     GestureDetector(
-                      onTap: () { setState(() {
-                       foodCount++; 
-                      });},
-                      child: Icon(
-                        Icons.add,
-                        color: Colors.green,
+                      onTap: () {
+                        setState(() {
+                          foodCount++;
+                        });
+                      },
+                      child: Container(
+                        child: Icon(
+                          Icons.add,
+                          color: Colors.green,
+                        ),
                       ),
                     ),
                     Divider(
-                      color: Colors.grey,
+                      color: Colors.grey.shade400,
                       height: .6,
                     ),
                     Text(
@@ -138,17 +146,20 @@ class _MenuFoodCardState extends State<MenuFoodCard> {
                       style: TextStyle(fontSize: 18, color: Colors.green),
                     ),
                     Divider(
-                      color: Colors.grey,
+                      color: Colors.grey.shade400,
                       height: .6,
                     ),
                     GestureDetector(
-                      onTap: () { setState(() {
-                        if(foodCount > 0)
-                          foodCount--; 
-                      });},
-                      child: Icon(
-                        Icons.remove,
-                        color: Colors.green,
+                      onTap: () {
+                        setState(() {
+                          if (foodCount > 0) foodCount--;
+                        });
+                      },
+                      child: Container(
+                        child: Icon(
+                          Icons.remove,
+                          color: Colors.green,
+                        ),
                       ),
                     ),
                   ],
