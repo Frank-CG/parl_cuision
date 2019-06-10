@@ -29,6 +29,10 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.instance =
+        ScreenUtil(width: 1125, height: 2436, allowFontScaling: true)
+          ..init(context);
+          
     final AuthenticationBloc authenticationBloc =
         BlocProvider.of<AuthenticationBloc>(context);
 

@@ -61,29 +61,6 @@ class _ReservStepsState extends State<ReservSteps> {
     );
   }
 
-  // Widget _getNextButton() {
-  //   return Container(
-  //     child: Padding(
-  //       padding: const EdgeInsets.only(
-  //         top: 50.0,
-  //       ),
-  //       child: ButtonTheme(
-  //         minWidth: ScreenUtil.getInstance().setWidth(850),
-  //         child: RaisedButton(
-  //           color: Colors.green,
-  //           textColor: Colors.white,
-  //           shape: new RoundedRectangleBorder(
-  //               borderRadius: new BorderRadius.circular(10.0)),
-  //           child: Text("Next Step"),
-  //           onPressed: () {
-  //             nextStep();
-  //           },
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
-
   Widget _getNextButton() {
     String buttonText = "Next Step";
     if(current_step == steps_count - 1){
@@ -235,22 +212,25 @@ class _ReservStepsState extends State<ReservSteps> {
     }
 
     return Container(
+      height: ScreenUtil.getInstance().setHeight(1350),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(
-              top: 20.0,
+          Container(
+            height: ScreenUtil.getInstance().setHeight(140),
+            padding: EdgeInsets.only(
+              top: ScreenUtil.getInstance().setHeight(80),
             ),
             child: Text(
               title,
               style: titleStyle,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(
-              top: 10.0,
+          Container(
+            height: ScreenUtil.getInstance().setHeight(120),
+            padding: EdgeInsets.only(
+              top: ScreenUtil.getInstance().setHeight(20),
             ),
             child: Text(
               subtitles[current_step],
@@ -407,12 +387,8 @@ class _ReservStepsState extends State<ReservSteps> {
     );
 
     return Container(
-      height: 250,
-      width: 330,
-      margin: EdgeInsets.only(
-        bottom: 20,
-        top: 10,
-      ),
+      height: ScreenUtil.getInstance().setHeight(1090),
+      padding: EdgeInsets.all(16.0),
       child: dp.DayPicker(
         selectedDate: _selectedDate,
         onChanged: _onSelectedDateChanged,
