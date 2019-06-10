@@ -2,9 +2,14 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:parl_cuision/common/common.dart';
+import 'package:parl_cuision/reservation/custom_picker.dart';
+
+import 'checkout_dialog.dart';
 
 class CheckoutPage extends StatefulWidget {
-  // CheckoutPage({Key key}) : super(key: key);
+  CheckoutPage({
+    Key key,
+  }) : super(key: key);
 
   @override
   _CheckoutPageState createState() => _CheckoutPageState();
@@ -17,6 +22,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
   final List<String> _stepTitles = <String>["REVIEW", "SET TIME", "CONFIRM"];
   int current_step = 0;
   double _kStepSize = 24.0;
+  int _hour = 0;
+  int _minute = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -161,52 +168,566 @@ class _CheckoutPageState extends State<CheckoutPage> {
   }
 
   Widget _getStepPage(int current_step) {
+    Widget pageContent = null;
+    switch (current_step) {
+      case 0:
+        pageContent = _getStepPageContent1();
+        break;
+      case 1:
+        pageContent = _getStepPageContent2();
+        break;
+      case 2:
+        pageContent = _getStepPageContent3();
+        break;
+      default:
+        break;
+    }
+
     return Container(
       height: ScreenUtil.getInstance().setHeight(1600),
       alignment: Alignment.topLeft,
       // color: Colors.lime,
-      child: Column(
-        children: <Widget>[
-          Container(
-            height: ScreenUtil.getInstance().setHeight(280),
-            padding: EdgeInsets.only(
-              left: ScreenUtil.getInstance().setWidth(63),
-              top: ScreenUtil.getInstance().setHeight(90),
+      child: pageContent,
+    );
+  }
+
+  Widget _getStepPageContent1() {
+    return Column(
+      children: <Widget>[
+        Container(
+          height: ScreenUtil.getInstance().setHeight(280),
+          padding: EdgeInsets.only(
+            left: ScreenUtil.getInstance().setWidth(63),
+            top: ScreenUtil.getInstance().setHeight(90),
+          ),
+          alignment: Alignment.topLeft,
+          child: Text(
+            "Review items below",
+            style: TextStyle(
+              fontSize: 18.0,
+              fontWeight: FontWeight.w800,
+              fontFamily: _defaultFontFamily,
             ),
-            alignment: Alignment.topLeft,
-            child: Text(
-              "Review items below",
-              style: TextStyle(
-                fontSize: 18.0,
-                fontWeight: FontWeight.w800,
-                fontFamily: _defaultFontFamily,
+          ),
+        ),
+        Container(
+          height: ScreenUtil.getInstance().setHeight(1000),
+          child: Scaffold(
+            body: ListView(
+              children: <Widget>[
+                FoodCard(
+                  foodImg: Image.asset("assets/images/food1.png"),
+                  name: "House soup",
+                  price: 7.00,
+                  count: 2,
+                ),
+                FoodCard(
+                  foodImg: Image.asset("assets/images/food2.png"),
+                  name: "Caesar salad",
+                  price: 8.00,
+                  count: 1,
+                ),
+                FoodCard(
+                  foodImg: Image.asset("assets/images/food3.png"),
+                  name: "Beet cured gravlax",
+                  price: 9.00,
+                  count: 3,
+                ),
+              ],
+            ),
+          ),
+        ),
+        Container(
+          height: ScreenUtil.getInstance().setHeight(320),
+          color: Colors.white,
+          padding: EdgeInsets.only(
+            left: ScreenUtil.getInstance().setWidth(63),
+          ),
+          child: Row(
+            children: <Widget>[
+              Container(
+                width: ScreenUtil.getInstance().setWidth(125),
+                margin: EdgeInsets.only(
+                  right: ScreenUtil.getInstance().setWidth(40),
+                ),
+                child: Image.asset(
+                  "assets/images/icon_total.png",
+                  width: ScreenUtil.getInstance().setWidth(120),
+                ),
+              ),
+              Container(
+                width: ScreenUtil.getInstance().setWidth(520),
+                alignment: Alignment.centerLeft,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      "Total",
+                      style: TextStyle(
+                        fontSize: 24.0,
+                        fontFamily: _defaultFontFamily,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      "5 items",
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        fontFamily: _defaultFontFamily,
+                        color: Colors.grey.shade400,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              Container(
+                width: ScreenUtil.getInstance().setWidth(300),
+                child: Text(
+                  "\$" + "36.00",
+                  style: TextStyle(
+                      fontSize: 28.0,
+                      fontFamily: _defaultFontFamily,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _getStepPageContent2() {
+    List<String> _hours = <String>["11", "12", "13", "14", "15"];
+    List<String> _minutes = <String>["00", "15", "30", "45"];
+
+    return Column(
+      children: <Widget>[
+        Container(
+          height: ScreenUtil.getInstance().setHeight(280),
+          padding: EdgeInsets.only(
+            left: ScreenUtil.getInstance().setWidth(63),
+            top: ScreenUtil.getInstance().setHeight(90),
+          ),
+          alignment: Alignment.topLeft,
+          child: Text(
+            "Select pickup time",
+            style: TextStyle(
+              fontSize: 18.0,
+              fontWeight: FontWeight.w800,
+              fontFamily: _defaultFontFamily,
+            ),
+          ),
+        ),
+        Container(
+          height: ScreenUtil.getInstance().setHeight(1000),
+          // margin: EdgeInsets.only(
+          //   bottom: 30.0,
+          // ),
+          child: Column(
+            children: <Widget>[
+              _getCustomPicker("HOURS", _hours),
+              _getCustomPicker("MINUTES", _minutes),
+            ],
+          ),
+        ),
+        Container(
+          height: ScreenUtil.getInstance().setHeight(320),
+          color: Colors.white,
+          padding: EdgeInsets.only(
+            left: ScreenUtil.getInstance().setWidth(63),
+          ),
+          child: Row(
+            children: <Widget>[
+              Container(
+                width: ScreenUtil.getInstance().setWidth(125),
+                margin: EdgeInsets.only(
+                  right: ScreenUtil.getInstance().setWidth(40),
+                ),
+                child: Image.asset(
+                  "assets/images/icon_pickuptime.png",
+                  width: ScreenUtil.getInstance().setWidth(120),
+                ),
+              ),
+              Container(
+                width: ScreenUtil.getInstance().setWidth(420),
+                alignment: Alignment.centerLeft,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      "Pickup",
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        fontFamily: _defaultFontFamily,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    Text(
+                      "time",
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        fontFamily: _defaultFontFamily,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                width: ScreenUtil.getInstance().setWidth(400),
+                child: Text(
+                  "12:45 pm",
+                  style: TextStyle(
+                      fontSize: 28.0,
+                      fontFamily: _defaultFontFamily,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _getCustomPicker(String title, List<String> options) {
+    return CustomPicker(title, options, _customPickerCallback);
+  }
+
+  void _customPickerCallback(String selectedValue) {
+    print(selectedValue);
+    var temp = selectedValue.split(":");
+    int value = int.parse(temp[1]);
+    if (temp[0] == "HOURS") {
+      setState(() {
+        _hour = value;
+      });
+    } else if (temp[0] == "MINUTES") {
+      setState(() {
+        _minute = value;
+      });
+    }
+  }
+
+  Widget _getStepPageContent3() {
+    return Column(
+      children: <Widget>[
+        Container(
+          height: ScreenUtil.getInstance().setHeight(280),
+          padding: EdgeInsets.only(
+            left: ScreenUtil.getInstance().setWidth(120),
+            top: ScreenUtil.getInstance().setHeight(90),
+          ),
+          alignment: Alignment.topLeft,
+          child: Text(
+            "Confirm your order",
+            style: TextStyle(
+              fontSize: 18.0,
+              fontWeight: FontWeight.w800,
+              fontFamily: _defaultFontFamily,
+            ),
+          ),
+        ),
+        Container(
+          height: ScreenUtil.getInstance().setHeight(850),
+          padding: EdgeInsets.only(
+            left: ScreenUtil.getInstance().setWidth(80),
+            right: ScreenUtil.getInstance().setWidth(80),
+            bottom: ScreenUtil.getInstance().setWidth(80),
+          ),
+          child: Card(
+            color: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+            elevation: 2.0,
+            child: Scaffold(
+              body: ListView(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: <Widget>[
+                        SizedBox(
+                          width: ScreenUtil.getInstance().setWidth(300),
+                          child: Text(
+                            "ITEMS",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              fontFamily: _defaultFontFamily,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.grey.shade400,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: ScreenUtil.getInstance().setWidth(300),
+                          child: Text(
+                            "QUANTITY",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              fontFamily: _defaultFontFamily,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.grey.shade400,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: ScreenUtil.getInstance().setWidth(280),
+                          child: Text(
+                            "PRICE",
+                            textAlign: TextAlign.right,
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              fontFamily: _defaultFontFamily,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.grey.shade400,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 8.0,
+                      right: 8.0,
+                    ),
+                    child: Divider(
+                      color: Colors.grey.shade400,
+                      height: 2,
+                    ),
+                  ),
+                  _getOrderItem("House soup", "2", "\$14.00"),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 8.0,
+                      right: 8.0,
+                    ),
+                    child: Divider(
+                      color: Colors.grey.shade400,
+                      height: 2,
+                    ),
+                  ),
+                  _getOrderItem("Caesar salad", "1", "\$8.00"),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 8.0,
+                      right: 8.0,
+                    ),
+                    child: Divider(
+                      color: Colors.grey.shade400,
+                      height: 2,
+                    ),
+                  ),
+                  _getOrderItem("Brussel sprouts", "2", "\$14.00"),
+                ],
               ),
             ),
           ),
-          FoodCard(foodImg: Image.asset("assets/images/food1.png"), name: "House soup", price: 7.00, count: 2,),
-          FoodCard(foodImg: Image.asset("assets/images/food2.png"), name: "Caesar salad", price: 8.00, count: 1,),
-          FoodCard(foodImg: Image.asset("assets/images/food3.png"), name: "Beet cured gravlax", price: 9.00, count: 3,),
+        ),
+        Container(
+          height: ScreenUtil.getInstance().setHeight(320),
+          color: Colors.white,
+          padding: EdgeInsets.only(
+            left: ScreenUtil.getInstance().setWidth(63),
+          ),
+          child: Row(
+            children: <Widget>[
+              Container(
+                width: ScreenUtil.getInstance().setWidth(100),
+                margin: EdgeInsets.only(
+                  right: ScreenUtil.getInstance().setWidth(40),
+                ),
+                child: Image.asset(
+                  "assets/images/icon_pickuptime.png",
+                  width: ScreenUtil.getInstance().setWidth(100),
+                ),
+              ),
+              Container(
+                width: ScreenUtil.getInstance().setWidth(340),
+                alignment: Alignment.centerLeft,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      "Pickup time",
+                      style: TextStyle(
+                        fontSize: 14.0,
+                        fontFamily: _defaultFontFamily,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    Text(
+                      "12:45 pm",
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        fontFamily: _defaultFontFamily,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Container(
+                  height: ScreenUtil.getInstance().setHeight(320),
+                  width: 1,
+                  color: Colors.grey.shade300,
+                ),
+              ),
+              Container(
+                width: ScreenUtil.getInstance().setWidth(100),
+                margin: EdgeInsets.only(
+                  right: ScreenUtil.getInstance().setWidth(40),
+                ),
+                child: Image.asset(
+                  "assets/images/icon_total.png",
+                  width: ScreenUtil.getInstance().setWidth(100),
+                ),
+              ),
+              Container(
+                width: ScreenUtil.getInstance().setWidth(340),
+                alignment: Alignment.centerLeft,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      "Total",
+                      style: TextStyle(
+                        fontSize: 14.0,
+                        fontFamily: _defaultFontFamily,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    Text(
+                      "\$36.00",
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        fontFamily: _defaultFontFamily,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        Container(
+          height: ScreenUtil.getInstance().setHeight(150),
+          child: Align(
+            alignment: Alignment(0, 0),
+            child: Text(
+              "ADD ORDER COMMENTS",
+              style: TextStyle(
+                fontSize: 12,
+                fontFamily: _defaultFontFamily,
+                fontWeight: FontWeight.bold,
+                color: Colors.green,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _getOrderItem(String name, String quantity, String price) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        children: <Widget>[
+          SizedBox(
+            width: ScreenUtil.getInstance().setWidth(300),
+            child: Text(
+              name,
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                fontSize: 14.0,
+                fontFamily: _defaultFontFamily,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+          SizedBox(
+            width: ScreenUtil.getInstance().setWidth(300),
+            child: Text(
+              quantity,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 14.0,
+                fontFamily: _defaultFontFamily,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+          SizedBox(
+            width: ScreenUtil.getInstance().setWidth(280),
+            child: Text(
+              price,
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                fontSize: 14.0,
+                fontFamily: _defaultFontFamily,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
         ],
       ),
     );
   }
 
   Widget _getBottomButton(int current_step) {
-    return Container(
-      height: ScreenUtil.getInstance().setHeight(186),
-      width: ScreenUtil.getInstance().setWidth(1125),
-      alignment: Alignment(0, 0),
-      color: Colors.green,
-      child: Text(
-        "Next",
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 18.0,
-          fontWeight: FontWeight.bold,
-          fontFamily: _defaultFontFamily,
+    String buttonText = "Next";
+    if (current_step == 2) {
+      buttonText = "Place order";
+    }
+    return GestureDetector(
+      onTap: _nextStep,
+      child: Container(
+        height: ScreenUtil.getInstance().setHeight(186),
+        width: ScreenUtil.getInstance().setWidth(1125),
+        alignment: Alignment(0, 0),
+        color: Colors.green,
+        child: Text(
+          buttonText,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 18.0,
+            fontWeight: FontWeight.bold,
+            fontFamily: _defaultFontFamily,
+          ),
+          textAlign: TextAlign.center,
         ),
-        textAlign: TextAlign.center,
       ),
     );
+  }
+
+  void _nextStep() {
+    print(current_step);
+    setState(() {
+      if (current_step < 2) {
+        current_step++;
+      } else {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) => CustomDialog(
+                title: "Success",
+                description: "Your order will be ready for pickup at",
+                buttonText: "Okay",
+              ),
+        );
+      }
+    });
   }
 }

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:parl_cuision/authentication/authentication.dart';
-import 'package:parl_cuision/common/food_item.dart';
+
+import 'menu_foodlist.dart';
+import 'package:screen/screen.dart';
 
 class MenuPage extends StatefulWidget {
   @override
@@ -26,6 +28,8 @@ class _MenuPageState extends State<MenuPage> {
 
     final AuthenticationBloc authenticationBloc =
         BlocProvider.of<AuthenticationBloc>(context);
+    
+    Screen.keepOn(true);
 
     return Scaffold(
       body: Stack(
@@ -118,7 +122,7 @@ class _MenuPageState extends State<MenuPage> {
                               alignment: Alignment.center,
                               child: Container(
                                 child: Image.asset(
-                                  "assets/images/a.png",
+                                  "assets/images/icon_healthy.png",
                                   height: 55.0,
                                   width: 50.0,
                                 ),
@@ -164,7 +168,7 @@ class _MenuPageState extends State<MenuPage> {
                               alignment: Alignment.center,
                               child: Container(
                                 child: Image.asset(
-                                  "assets/images/b.png",
+                                  "assets/images/icon_vegetarian.png",
                                   height: 55.0,
                                   width: 75.0,
                                 ),
@@ -203,7 +207,7 @@ class _MenuPageState extends State<MenuPage> {
                               alignment: Alignment.center,
                               child: Container(
                                 child: Image.asset(
-                                  "assets/images/c.png",
+                                  "assets/images/icon_vegan.png",
                                   height: 45.0,
                                   width: 55.0,
                                 ),

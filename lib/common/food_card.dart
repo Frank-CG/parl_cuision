@@ -2,23 +2,27 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class FoodCard extends StatelessWidget {
-  // const FoodCard({Key key}) : super(key: key);
+class FoodCard extends StatefulWidget {
   FoodCard({
-    Key key,
-    double width,
-    double height,
-    this.foodImg,
-    this.name,
-    this.price,
-    this.count,
-  }) : super(key: key);
+      Key key,
+      double width,
+      double height,
+      this.foodImg,
+      this.name,
+      this.price,
+      this.count,
+    }) : super(key: key);
 
   Image foodImg;
   String name;
   double price;
   int count;
 
+  @override
+  _FoodCardState createState() => _FoodCardState();
+}
+
+class _FoodCardState extends State<FoodCard> {
   @override
   Widget build(BuildContext context) {
     ScreenUtil.instance =
@@ -34,7 +38,7 @@ class FoodCard extends StatelessWidget {
           children: <Widget>[
             Container(
               width: ScreenUtil.getInstance().setWidth(282),
-              child: foodImg,
+              child: widget.foodImg,
             ),
             Container(
               width: ScreenUtil.getInstance().setWidth(550),
@@ -46,7 +50,7 @@ class FoodCard extends StatelessWidget {
                 children: <Widget>[
                   Container(
                     padding: EdgeInsets.only(left: ScreenUtil.getInstance().setWidth(60),),
-                    child: Text(name, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500,),),
+                    child: Text(widget.name, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500,),),
                   ),
                   Container(
                     padding: EdgeInsets.only(left: ScreenUtil.getInstance().setWidth(30),),
@@ -62,14 +66,16 @@ class FoodCard extends StatelessWidget {
                               shape: new RoundedRectangleBorder(
                                   borderRadius: new BorderRadius.circular(30.0)),
                               child: Text("-"),
-                              onPressed: () {},
+                              onPressed: () { setState(() {
+                               if(widget.count > 0){ widget.count--; } 
+                              }); },
                             ),
                           ),
                         ),
                         Container(
                           padding: EdgeInsets.only(left: ScreenUtil.getInstance().setWidth(20),
                           right: ScreenUtil.getInstance().setWidth(20),),
-                          child: Text(count.toString()),
+                          child: Text(widget.count.toString()),
                         ),
                         Container(
                           child: ButtonTheme(
@@ -81,7 +87,9 @@ class FoodCard extends StatelessWidget {
                               shape: new RoundedRectangleBorder(
                                   borderRadius: new BorderRadius.circular(30.0)),
                               child: Text("+"),
-                              onPressed: () {},
+                              onPressed: () { setState(() {
+                               widget.count++;
+                              }); },
                             ),
                           ),
                         ),
@@ -94,7 +102,7 @@ class FoodCard extends StatelessWidget {
             Container(
               width: ScreenUtil.getInstance().setWidth(130),
               // color: Colors.yellow,
-              child: Text("\$"+(price*count).toString()),
+              child: Text("\$"+(widget.price*widget.count).toString()),
             ),
           ],
         ),
