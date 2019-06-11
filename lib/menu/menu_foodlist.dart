@@ -95,8 +95,8 @@ class FoodList extends StatelessWidget {
             MenuFoodCard(
               foodImg: Image.asset(
                 "assets/images/food" + (index % 3 + 1).toString() + ".png",
-                height: ScreenUtil.getInstance().setHeight(370),
-                width: ScreenUtil.getInstance().setWidth(282),
+                // height: ScreenUtil.getInstance().setHeight(370),
+                // width: ScreenUtil.getInstance().setWidth(282),
               ),
               name: test_foodNames[index % 3],
               price: 7.00 + index % 5,

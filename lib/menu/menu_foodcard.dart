@@ -47,22 +47,26 @@ class _MenuFoodCardState extends State<MenuFoodCard> {
       ),
     ];
 
+    // print("Image Height:" + widget.foodImg.height.toString());
+    // print("Image Width :" + widget.foodImg.width.toString());
+
     return Container(
-      margin: EdgeInsets.fromLTRB(ScreenUtil.getInstance().setWidth(63), 0,
-          ScreenUtil.getInstance().setWidth(63), 0),
+      margin: EdgeInsets.fromLTRB(ScreenUtil.getInstance().setWidth(60), 0,
+          ScreenUtil.getInstance().setWidth(60), 0),
       width: ScreenUtil.getInstance().setWidth(999),
-      height: ScreenUtil.getInstance().setHeight(370),
+      // height: ScreenUtil.getInstance().setHeight(340),
       child: Card(
+        //child: IntrinsicHeight(
         child: Row(
           children: <Widget>[
             Container(
               width: ScreenUtil.getInstance().setWidth(282),
-              height: ScreenUtil.getInstance().setHeight(370),
+              // height: ScreenUtil.getInstance().setHeight(340),
               child: widget.foodImg,
             ),
             Container(
               width: ScreenUtil.getInstance().setWidth(500),
-              height: ScreenUtil.getInstance().setHeight(370),
+              height: ScreenUtil.getInstance().setHeight(340),
               color: Colors.white,
               alignment: Alignment.topLeft,
               child: Column(
@@ -102,8 +106,8 @@ class _MenuFoodCardState extends State<MenuFoodCard> {
               ),
             ),
             Container(
-              width: ScreenUtil.getInstance().setWidth(40),
-              margin: EdgeInsets.only(
+              width: ScreenUtil.getInstance().setWidth(90),
+              padding: EdgeInsets.only(
                 right: ScreenUtil.getInstance().setWidth(50.0),
               ),
               alignment: Alignment.centerLeft,
@@ -111,7 +115,7 @@ class _MenuFoodCardState extends State<MenuFoodCard> {
             ),
             Container(
               width: ScreenUtil.getInstance().setWidth(105),
-              height: ScreenUtil.getInstance().setHeight(370),
+              height: ScreenUtil.getInstance().setHeight(340),
               decoration: BoxDecoration(
                 border: Border(
                   left: BorderSide(
@@ -123,12 +127,12 @@ class _MenuFoodCardState extends State<MenuFoodCard> {
               child: Container(
                 child: Column(
                   // crossAxisAlignment: CrossAxisAlignment.stretch,
-                  // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Container(
                       color: Colors.lightGreen[100],
                       width: ScreenUtil.getInstance().setWidth(105),
-                      height: ScreenUtil.getInstance().setHeight(114),
+                      height: ScreenUtil.getInstance().setHeight(110),
                       child: GestureDetector(
                         onTap: () {
                           setState(() {
@@ -143,26 +147,27 @@ class _MenuFoodCardState extends State<MenuFoodCard> {
                         ),
                       ),
                     ),
-                    Divider(
-                      color: Colors.grey.shade400,
-                      height: ScreenUtil.getInstance().setHeight(2),
-                    ),
+                    // Divider(
+                    //   color: Colors.grey.shade400,
+                    //   height: ScreenUtil.getInstance().setHeight(2),
+                    // ),
                     Container(
-                      height: ScreenUtil.getInstance().setHeight(110),
+                      width: ScreenUtil.getInstance().setWidth(105),
+                      height: ScreenUtil.getInstance().setHeight(80),
                       alignment: Alignment.center,
                       child: Text(
                         foodCount.toString(),
                         style: TextStyle(fontSize: 18, color: Colors.green),
                       ),
                     ),
-                    Divider(
-                      color: Colors.grey.shade400,
-                      height: ScreenUtil.getInstance().setHeight(2),
-                    ),
+                    // Divider(
+                    //   color: Colors.grey.shade400,
+                    //   height: ScreenUtil.getInstance().setHeight(2),
+                    // ),
                     Container(
                       color: Colors.lightGreen[100],
                       width: ScreenUtil.getInstance().setWidth(105),
-                      height: ScreenUtil.getInstance().setHeight(115),
+                      height: ScreenUtil.getInstance().setHeight(110),
                       child: GestureDetector(
                         onTap: () {
                           setState(() {
@@ -183,6 +188,7 @@ class _MenuFoodCardState extends State<MenuFoodCard> {
             ),
           ],
         ),
+        //),
       ),
     );
   }
