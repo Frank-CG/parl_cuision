@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:parl_cuision/common/common.dart';
 import 'package:parl_cuision/reservation/custom_picker.dart';
+import 'package:parl_cuision/scoped_model/food_model.dart';
+import 'package:parl_cuision/scoped_model/order_model.dart';
 
 import 'checkout_dialog.dart';
 
@@ -24,6 +26,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
   double _kStepSize = 24.0;
   int _hour = 0;
   int _minute = 0;
+  double totalPrice = 0;
+  int itemsCount = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -192,6 +196,30 @@ class _CheckoutPageState extends State<CheckoutPage> {
   }
 
   Widget _getStepPageContent1() {
+    List<FoodCard> orderItems = new List<FoodCard>();
+
+    OrderModel om = new OrderModel();
+    totalPrice = 0;
+    itemsCount = 0;
+    for (int i = 0; i < om.foodOrder.length; i++) {
+      var fd = om.foodOrder[i];
+      if (fd.orderCount > 0) {
+        print(fd);
+        totalPrice += fd.foodPrice * fd.orderCount;
+        itemsCount += fd.orderCount;
+        orderItems.add(
+          FoodCard(
+            index: fd.foodIndex - 1,
+            foodImg: Image.asset(fd.foodImage),
+            name: fd.foodName,
+            price: fd.foodPrice,
+            count: fd.orderCount,
+            checkoutCallback: _itemChangeCallback,
+          ),
+        );
+      }
+    }
+
     return Column(
       children: <Widget>[
         Container(
@@ -214,26 +242,27 @@ class _CheckoutPageState extends State<CheckoutPage> {
           height: ScreenUtil.getInstance().setHeight(1000),
           child: Scaffold(
             body: ListView(
-              children: <Widget>[
-                FoodCard(
-                  foodImg: Image.asset("assets/images/food1.png"),
-                  name: "House soup",
-                  price: 7.00,
-                  count: 2,
-                ),
-                FoodCard(
-                  foodImg: Image.asset("assets/images/food2.png"),
-                  name: "Caesar salad",
-                  price: 8.00,
-                  count: 1,
-                ),
-                FoodCard(
-                  foodImg: Image.asset("assets/images/food3.png"),
-                  name: "Beet cured gravlax",
-                  price: 9.00,
-                  count: 3,
-                ),
-              ],
+              children: orderItems,
+              // children: <Widget>[
+              //   FoodCard(
+              //     foodImg: Image.asset("assets/images/food1.png"),
+              //     name: "House soup",
+              //     price: 7.00,
+              //     count: 2,
+              //   ),
+              //   FoodCard(
+              //     foodImg: Image.asset("assets/images/food2.png"),
+              //     name: "Caesar salad",
+              //     price: 8.00,
+              //     count: 1,
+              //   ),
+              //   FoodCard(
+              //     foodImg: Image.asset("assets/images/food3.png"),
+              //     name: "Beet cured gravlax",
+              //     price: 9.00,
+              //     count: 3,
+              //   ),
+              // ],
             ),
           ),
         ),
@@ -271,7 +300,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                       ),
                     ),
                     Text(
-                      "5 items",
+                      "$itemsCount items",
                       style: TextStyle(
                         fontSize: 16.0,
                         fontFamily: _defaultFontFamily,
@@ -284,7 +313,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
               Container(
                 width: ScreenUtil.getInstance().setWidth(300),
                 child: Text(
-                  "\$" + "36.00",
+                  "\$" + totalPrice.toString(),
                   style: TextStyle(
                       fontSize: 28.0,
                       fontFamily: _defaultFontFamily,
@@ -296,6 +325,20 @@ class _CheckoutPageState extends State<CheckoutPage> {
         ),
       ],
     );
+  }
+
+  void _itemChangeCallback() {
+    // OrderModel om = new OrderModel();
+    // double temp = 0;
+    // for(int i=0; i<om.foodOrder.length; i++){
+    //   var fd = om.foodOrder[i];
+    //   if(fd.orderCount > 0){
+    //     temp += fd.foodPrice * fd.orderCount;
+    //   }
+    // }
+    setState(() {
+      totalPrice = 0; //temp;
+    });
   }
 
   Widget _getStepPageContent2() {
@@ -379,7 +422,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
               Container(
                 width: ScreenUtil.getInstance().setWidth(400),
                 child: Text(
-                  "12:45 pm",
+                  "$_hour:$_minute pm",
                   style: TextStyle(
                       fontSize: 28.0,
                       fontFamily: _defaultFontFamily,
@@ -413,6 +456,75 @@ class _CheckoutPageState extends State<CheckoutPage> {
   }
 
   Widget _getStepPageContent3() {
+    List<Widget> bodyList = <Widget>[];
+    bodyList.add(Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        children: <Widget>[
+          SizedBox(
+            width: ScreenUtil.getInstance().setWidth(300),
+            child: Text(
+              "ITEMS",
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                fontSize: 16.0,
+                fontFamily: _defaultFontFamily,
+                fontWeight: FontWeight.w600,
+                color: Colors.grey.shade400,
+              ),
+            ),
+          ),
+          SizedBox(
+            width: ScreenUtil.getInstance().setWidth(300),
+            child: Text(
+              "QUANTITY",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 16.0,
+                fontFamily: _defaultFontFamily,
+                fontWeight: FontWeight.w600,
+                color: Colors.grey.shade400,
+              ),
+            ),
+          ),
+          SizedBox(
+            width: ScreenUtil.getInstance().setWidth(280),
+            child: Text(
+              "PRICE",
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                fontSize: 16.0,
+                fontFamily: _defaultFontFamily,
+                fontWeight: FontWeight.w600,
+                color: Colors.grey.shade400,
+              ),
+            ),
+          ),
+        ],
+      ),
+    ));
+
+    bodyList.add(Padding(
+      padding: const EdgeInsets.only(
+        left: 8.0,
+        right: 8.0,
+      ),
+      child: Divider(
+        color: Colors.grey.shade400,
+        height: 2,
+      ),
+    ));
+
+    OrderModel orderModel = new OrderModel();
+    for(int i=0; i<orderModel.foodOrder.length; i++){
+      FoodModel f = orderModel.foodOrder[i];
+      if(f.orderCount > 0){
+        bodyList.add(
+          _getOrderItem(f.foodName, f.orderCount.toString(), "\$" + (f.foodPrice*f.orderCount).toString())
+        );
+      }
+    }
+
     return Column(
       children: <Widget>[
         Container(
@@ -446,87 +558,89 @@ class _CheckoutPageState extends State<CheckoutPage> {
             elevation: 2.0,
             child: Scaffold(
               body: ListView(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: <Widget>[
-                        SizedBox(
-                          width: ScreenUtil.getInstance().setWidth(300),
-                          child: Text(
-                            "ITEMS",
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              fontSize: 16.0,
-                              fontFamily: _defaultFontFamily,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.grey.shade400,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: ScreenUtil.getInstance().setWidth(300),
-                          child: Text(
-                            "QUANTITY",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 16.0,
-                              fontFamily: _defaultFontFamily,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.grey.shade400,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: ScreenUtil.getInstance().setWidth(280),
-                          child: Text(
-                            "PRICE",
-                            textAlign: TextAlign.right,
-                            style: TextStyle(
-                              fontSize: 16.0,
-                              fontFamily: _defaultFontFamily,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.grey.shade400,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 8.0,
-                      right: 8.0,
-                    ),
-                    child: Divider(
-                      color: Colors.grey.shade400,
-                      height: 2,
-                    ),
-                  ),
-                  _getOrderItem("House soup", "2", "\$14.00"),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 8.0,
-                      right: 8.0,
-                    ),
-                    child: Divider(
-                      color: Colors.grey.shade400,
-                      height: 2,
-                    ),
-                  ),
-                  _getOrderItem("Caesar salad", "1", "\$8.00"),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 8.0,
-                      right: 8.0,
-                    ),
-                    child: Divider(
-                      color: Colors.grey.shade400,
-                      height: 2,
-                    ),
-                  ),
-                  _getOrderItem("Brussel sprouts", "2", "\$14.00"),
-                ],
+                children: bodyList,
+                // children: <Widget>[
+                //   Padding(
+                //     padding: const EdgeInsets.all(8.0),
+                //     child: Row(
+                //       children: <Widget>[
+                //         SizedBox(
+                //           width: ScreenUtil.getInstance().setWidth(300),
+                //           child: Text(
+                //             "ITEMS",
+                //             textAlign: TextAlign.left,
+                //             style: TextStyle(
+                //               fontSize: 16.0,
+                //               fontFamily: _defaultFontFamily,
+                //               fontWeight: FontWeight.w600,
+                //               color: Colors.grey.shade400,
+                //             ),
+                //           ),
+                //         ),
+                //         SizedBox(
+                //           width: ScreenUtil.getInstance().setWidth(300),
+                //           child: Text(
+                //             "QUANTITY",
+                //             textAlign: TextAlign.center,
+                //             style: TextStyle(
+                //               fontSize: 16.0,
+                //               fontFamily: _defaultFontFamily,
+                //               fontWeight: FontWeight.w600,
+                //               color: Colors.grey.shade400,
+                //             ),
+                //           ),
+                //         ),
+                //         SizedBox(
+                //           width: ScreenUtil.getInstance().setWidth(280),
+                //           child: Text(
+                //             "PRICE",
+                //             textAlign: TextAlign.right,
+                //             style: TextStyle(
+                //               fontSize: 16.0,
+                //               fontFamily: _defaultFontFamily,
+                //               fontWeight: FontWeight.w600,
+                //               color: Colors.grey.shade400,
+                //             ),
+                //           ),
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                //   Padding(
+                //     padding: const EdgeInsets.only(
+                //       left: 8.0,
+                //       right: 8.0,
+                //     ),
+                //     child: Divider(
+                //       color: Colors.grey.shade400,
+                //       height: 2,
+                //     ),
+                //   ),
+                //   _getOrderItem("House soup", "2", "\$14.00"),
+                //   Padding(
+                //     padding: const EdgeInsets.only(
+                //       left: 8.0,
+                //       right: 8.0,
+                //     ),
+                //     child: Divider(
+                //       color: Colors.grey.shade400,
+                //       height: 2,
+                //     ),
+                //   ),
+                //   _getOrderItem("Caesar salad", "1", "\$8.00"),
+                //   Padding(
+                //     padding: const EdgeInsets.only(
+                //       left: 8.0,
+                //       right: 8.0,
+                //     ),
+                //     child: Divider(
+                //       color: Colors.grey.shade400,
+                //       height: 2,
+                //     ),
+                //   ),
+                //   _getOrderItem("Brussel sprouts", "2", "\$14.00"),
+                // ],
+              
               ),
             ),
           ),
@@ -565,7 +679,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                       ),
                     ),
                     Text(
-                      "12:45 pm",
+                      "$_hour:$_minute pm",
                       style: TextStyle(
                         fontSize: 20.0,
                         fontFamily: _defaultFontFamily,
@@ -609,7 +723,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                       ),
                     ),
                     Text(
-                      "\$36.00",
+                      "\$$totalPrice",
                       style: TextStyle(
                         fontSize: 20.0,
                         fontFamily: _defaultFontFamily,

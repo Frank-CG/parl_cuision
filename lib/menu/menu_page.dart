@@ -298,7 +298,7 @@ class _MenuPageState extends State<MenuPage> {
 
               Container(
                 height: ScreenUtil.getInstance().setHeight(1360),
-                child: FoodCardList(),
+                child: FoodCardList(_filterItem1, _filterItem2, _filterItem3),
               ),
 
               // Expanded(

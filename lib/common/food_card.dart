@@ -1,28 +1,36 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:parl_cuision/scoped_model/order_model.dart';
 
 class FoodCard extends StatefulWidget {
   FoodCard({
-      Key key,
-      double width,
-      double height,
-      this.foodImg,
-      this.name,
-      this.price,
-      this.count,
-    }) : super(key: key);
+    Key key,
+    double width,
+    double height,
+    this.index,
+    this.foodImg,
+    this.name,
+    this.price,
+    this.count,
+    this.checkoutCallback,
+  }) : super(key: key);
 
+  int index;
   Image foodImg;
   String name;
   double price;
   int count;
+  
+  Function() checkoutCallback;
 
   @override
   _FoodCardState createState() => _FoodCardState();
 }
 
 class _FoodCardState extends State<FoodCard> {
+  OrderModel orderModel = new OrderModel();
+
   @override
   Widget build(BuildContext context) {
     ScreenUtil.instance =
@@ -49,11 +57,21 @@ class _FoodCardState extends State<FoodCard> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
-                    padding: EdgeInsets.only(left: ScreenUtil.getInstance().setWidth(60),),
-                    child: Text(widget.name, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500,),),
+                    padding: EdgeInsets.only(
+                      left: ScreenUtil.getInstance().setWidth(60),
+                    ),
+                    child: Text(
+                      widget.name,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   ),
                   Container(
-                    padding: EdgeInsets.only(left: ScreenUtil.getInstance().setWidth(30),),
+                    padding: EdgeInsets.only(
+                      left: ScreenUtil.getInstance().setWidth(30),
+                    ),
                     child: Row(
                       children: <Widget>[
                         Container(
@@ -64,17 +82,34 @@ class _FoodCardState extends State<FoodCard> {
                               color: Colors.green,
                               textColor: Colors.white,
                               shape: new RoundedRectangleBorder(
-                                  borderRadius: new BorderRadius.circular(30.0)),
+                                  borderRadius:
+                                      new BorderRadius.circular(30.0)),
                               child: Text("-"),
-                              onPressed: () { setState(() {
-                               if(widget.count > 0){ widget.count--; } 
-                              }); },
+                              onPressed: () {
+                                if (orderModel.foodOrder.length >
+                                    widget.index) {
+                                  orderModel.foodOrder[widget.index]
+                                      .setOrderCnt(widget.count - 1);
+                                  print(orderModel.foodOrder[widget.index]);
+                                } else {
+                                  print("Error: foodOrder length :" +
+                                      orderModel.foodOrder.length.toString());
+                                }
+                                setState(() {
+                                  if (widget.count > 0) {
+                                    widget.count--;
+                                  }
+                                });
+                                widget.checkoutCallback();
+                              },
                             ),
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.only(left: ScreenUtil.getInstance().setWidth(20),
-                          right: ScreenUtil.getInstance().setWidth(20),),
+                          padding: EdgeInsets.only(
+                            left: ScreenUtil.getInstance().setWidth(20),
+                            right: ScreenUtil.getInstance().setWidth(20),
+                          ),
                           child: Text(widget.count.toString()),
                         ),
                         Container(
@@ -85,11 +120,24 @@ class _FoodCardState extends State<FoodCard> {
                               color: Colors.green,
                               textColor: Colors.white,
                               shape: new RoundedRectangleBorder(
-                                  borderRadius: new BorderRadius.circular(30.0)),
+                                  borderRadius:
+                                      new BorderRadius.circular(30.0)),
                               child: Text("+"),
-                              onPressed: () { setState(() {
-                               widget.count++;
-                              }); },
+                              onPressed: () {
+                                if (orderModel.foodOrder.length >
+                                    widget.index) {
+                                  orderModel.foodOrder[widget.index]
+                                      .setOrderCnt(widget.count + 1);
+                                  print(orderModel.foodOrder[widget.index]);
+                                } else {
+                                  print("Error: foodOrder length :" +
+                                      orderModel.foodOrder.length.toString());
+                                }
+                                setState(() {
+                                  widget.count++;
+                                });
+                                widget.checkoutCallback();
+                              },
                             ),
                           ),
                         ),
@@ -102,7 +150,7 @@ class _FoodCardState extends State<FoodCard> {
             Container(
               width: ScreenUtil.getInstance().setWidth(130),
               // color: Colors.yellow,
-              child: Text("\$"+(widget.price*widget.count).toString()),
+              child: Text("\$" + (widget.price * widget.count).toString()),
             ),
           ],
         ),

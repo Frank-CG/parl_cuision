@@ -1,6 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:parl_cuision/scoped_model/food_model.dart';
+import 'package:parl_cuision/scoped_model/order_model.dart';
 
 class MenuFoodCard extends StatefulWidget {
   MenuFoodCard({
@@ -26,6 +28,7 @@ class MenuFoodCard extends StatefulWidget {
 
 class _MenuFoodCardState extends State<MenuFoodCard> {
   int foodCount = 0;
+  OrderModel orderModel = new OrderModel();
   @override
   Widget build(BuildContext context) {
     ScreenUtil.instance =
@@ -135,6 +138,12 @@ class _MenuFoodCardState extends State<MenuFoodCard> {
                       height: ScreenUtil.getInstance().setHeight(110),
                       child: GestureDetector(
                         onTap: () {
+                          if(orderModel.foodOrder.length > widget.index){
+                            orderModel.foodOrder[widget.index].setOrderCnt(foodCount + 1);
+                            print(orderModel.foodOrder[widget.index]);
+                          }else{
+                            print("Error: foodOrder length :" + orderModel.foodOrder.length.toString());
+                          }
                           setState(() {
                             foodCount++;
                           });
@@ -170,8 +179,17 @@ class _MenuFoodCardState extends State<MenuFoodCard> {
                       height: ScreenUtil.getInstance().setHeight(110),
                       child: GestureDetector(
                         onTap: () {
+                          if(orderModel.foodOrder.length > widget.index){
+                            orderModel.foodOrder[widget.index].setOrderCnt(foodCount - 1);
+                            print(orderModel.foodOrder[widget.index]);
+                          }else{
+                            print("Error: foodOrder length :" + orderModel.foodOrder.length.toString());
+                          }
+                          
                           setState(() {
-                            if (foodCount > 0) foodCount--;
+                            if (foodCount > 0){
+                              foodCount--;
+                            }
                           });
                         },
                         child: Container(
