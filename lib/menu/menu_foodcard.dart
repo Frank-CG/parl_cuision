@@ -63,12 +63,12 @@ class _MenuFoodCardState extends State<MenuFoodCard> {
         child: Row(
           children: <Widget>[
             Container(
-              width: ScreenUtil.getInstance().setWidth(282),
+              width: ScreenUtil.getInstance().setWidth(300),
               // height: ScreenUtil.getInstance().setHeight(340),
               child: widget.foodImg,
             ),
             Container(
-              width: ScreenUtil.getInstance().setWidth(500),
+              width: ScreenUtil.getInstance().setWidth(480),
               height: ScreenUtil.getInstance().setHeight(340),
               color: Colors.white,
               alignment: Alignment.topLeft,
