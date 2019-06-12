@@ -825,7 +825,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
       buttonText = "Place order";
     }
     Color buttonColor = Colors.green;
-    if ((current_step == 1) && (_hour == -1 || _minute == -1)) {
+    if (((current_step == 1) && (_hour == -1 || _minute == -1))||(current_step == 0 && itemsCount == 0)) {
       buttonColor = Colors.grey.shade500;
     }
 
@@ -852,7 +852,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
   void _nextStep() {
     print(current_step);
-    if ((current_step == 1) && (_hour == -1 || _minute == -1)) {
+    if (((current_step == 1) && (_hour == -1 || _minute == -1))||(current_step == 0 && itemsCount == 0)) {
       return;
     }
     setState(() {
