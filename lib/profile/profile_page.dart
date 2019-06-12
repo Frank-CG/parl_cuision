@@ -18,8 +18,14 @@ class _SettingsPageState extends State<SettingsPage> {
     fontFamily: "Nunito Sans",
     fontWeight: FontWeight.bold,
   );
-  bool isPickup = false;
-  bool isReservation = false;
+  TextStyle _subtitleStyle = TextStyle(
+    fontSize: ScreenUtil.getInstance().setSp(48.0),
+    fontFamily: "Nunito Sans",
+    fontWeight: FontWeight.bold,
+    color: Colors.white,
+  );
+  bool isPickup = true;
+  bool isReservation = true;
   AuthenticationBloc atb;
 
   @override
@@ -27,10 +33,10 @@ class _SettingsPageState extends State<SettingsPage> {
     ScreenUtil.instance =
         ScreenUtil(width: 1125, height: 2436, allowFontScaling: true)
           ..init(context);
-    
+
     final AuthenticationBloc authenticationBloc =
         BlocProvider.of<AuthenticationBloc>(context);
-    
+
     this.atb = authenticationBloc;
 
     return Container(
@@ -146,6 +152,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   width: ScreenUtil.getInstance().setWidth(420),
                   child: TextField(
                     style: _inputStyle,
+                    controller: _getTextController("Mark"),
                     decoration: InputDecoration(
                       labelText: "FIRST NAME",
                       labelStyle: _labelStyle,
@@ -164,6 +171,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   width: ScreenUtil.getInstance().setWidth(420),
                   child: TextField(
                     style: _inputStyle,
+                    controller: _getTextController("Smith"),
                     decoration: InputDecoration(
                       labelText: "LAST NAME",
                       labelStyle: _labelStyle,
@@ -191,6 +199,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   width: ScreenUtil.getInstance().setWidth(940),
                   child: TextField(
                     style: _inputStyle,
+                    controller: _getTextController("msmith@gmail.com"),
                     decoration: InputDecoration(
                       labelText: "EMAIL",
                       labelStyle: _labelStyle,
@@ -218,6 +227,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   width: ScreenUtil.getInstance().setWidth(940),
                   child: TextField(
                     style: _inputStyle,
+                    controller: _getTextController("514-999-2464"),
                     decoration: InputDecoration(
                       labelText: "PHONE",
                       labelStyle: _labelStyle,
@@ -235,6 +245,12 @@ class _SettingsPageState extends State<SettingsPage> {
         ],
       ),
     );
+  }
+
+  TextEditingController _getTextController(String defaultText) {
+    TextEditingController _textController = new TextEditingController();
+    _textController.text = defaultText;
+    return _textController;
   }
 
   Widget _notification() {
@@ -417,17 +433,27 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
           ),
           Container(
-            height: ScreenUtil.getInstance().setHeight(200),
+            height: ScreenUtil.getInstance().setHeight(240),
             padding: EdgeInsets.only(
-              top: ScreenUtil.getInstance().setHeight(20),
+              top: ScreenUtil.getInstance().setHeight(60),
               bottom: ScreenUtil.getInstance().setHeight(80),
             ),
             child: GestureDetector(
               onTap: _logout,
               child: Container(
+                width: ScreenUtil.getInstance().setWidth(300),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    width: 1,
+                    color: Colors.green,
+                  ),
+                  borderRadius: BorderRadius.circular(8),
+                  color: Colors.green,
+                ),
                 child: Text(
                   "Logout",
-                  style: _tileStyle,
+                  style: _subtitleStyle,
                 ),
               ),
             ),
@@ -468,7 +494,7 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  void _logout(){
+  void _logout() {
     atb.dispatch(LoggedOut());
     // Navigator.pop(context);
   }
