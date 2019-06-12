@@ -63,13 +63,13 @@ class _MenuFoodCardState extends State<MenuFoodCard> {
         child: Row(
           children: <Widget>[
             Container(
-              width: ScreenUtil.getInstance().setWidth(300),
+              width: ScreenUtil.getInstance().setWidth(240),
               // height: ScreenUtil.getInstance().setHeight(340),
               child: widget.foodImg,
             ),
             Container(
-              width: ScreenUtil.getInstance().setWidth(480),
-              height: ScreenUtil.getInstance().setHeight(340),
+              width: ScreenUtil.getInstance().setWidth(540),
+              // height: ScreenUtil.getInstance().setHeight(260),
               color: Colors.white,
               alignment: Alignment.topLeft,
               child: Column(
@@ -118,7 +118,7 @@ class _MenuFoodCardState extends State<MenuFoodCard> {
             ),
             Container(
               width: ScreenUtil.getInstance().setWidth(105),
-              height: ScreenUtil.getInstance().setHeight(340),
+              // height: ScreenUtil.getInstance().setHeight(340),
               decoration: BoxDecoration(
                 border: Border(
                   left: BorderSide(
@@ -135,7 +135,7 @@ class _MenuFoodCardState extends State<MenuFoodCard> {
                     Container(
                       color: Colors.lightGreen[100],
                       width: ScreenUtil.getInstance().setWidth(105),
-                      height: ScreenUtil.getInstance().setHeight(110),
+                      height: ScreenUtil.getInstance().setHeight(100),
                       child: GestureDetector(
                         onTap: () {
                           if(orderModel.foodOrder.length > widget.index){
@@ -162,7 +162,7 @@ class _MenuFoodCardState extends State<MenuFoodCard> {
                     // ),
                     Container(
                       width: ScreenUtil.getInstance().setWidth(105),
-                      height: ScreenUtil.getInstance().setHeight(80),
+                      height: ScreenUtil.getInstance().setHeight(90),
                       alignment: Alignment.center,
                       child: Text(
                         // foodCount.toString(),
@@ -177,7 +177,7 @@ class _MenuFoodCardState extends State<MenuFoodCard> {
                     Container(
                       color: Colors.lightGreen[100],
                       width: ScreenUtil.getInstance().setWidth(105),
-                      height: ScreenUtil.getInstance().setHeight(110),
+                      height: ScreenUtil.getInstance().setHeight(100),
                       child: GestureDetector(
                         onTap: () {
                           if(orderModel.foodOrder.length > widget.index){
