@@ -24,6 +24,15 @@ class FoodModel {
     this._orderCount = c;
   }
 
+  void orderCntOper(bool isAdd){
+    if(isAdd){
+      _orderCount++;
+    }else{
+      if(_orderCount > 0)
+        _orderCount--;
+    }
+  }
+
   int get foodIndex => _foodIndex;
   String get foodImage => _foodImage;
   String get foodType => _foodType;

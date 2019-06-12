@@ -139,7 +139,7 @@ class _MenuFoodCardState extends State<MenuFoodCard> {
                       child: GestureDetector(
                         onTap: () {
                           if(orderModel.foodOrder.length > widget.index){
-                            orderModel.foodOrder[widget.index].setOrderCnt(foodCount + 1);
+                            orderModel.foodOrder[widget.index].orderCntOper(true);
                             print(orderModel.foodOrder[widget.index]);
                           }else{
                             print("Error: foodOrder length :" + orderModel.foodOrder.length.toString());
@@ -165,7 +165,8 @@ class _MenuFoodCardState extends State<MenuFoodCard> {
                       height: ScreenUtil.getInstance().setHeight(80),
                       alignment: Alignment.center,
                       child: Text(
-                        foodCount.toString(),
+                        // foodCount.toString(),
+                        orderModel.foodOrder[widget.index].orderCount.toString(),
                         style: TextStyle(fontSize: 18, color: Colors.green),
                       ),
                     ),
@@ -180,7 +181,7 @@ class _MenuFoodCardState extends State<MenuFoodCard> {
                       child: GestureDetector(
                         onTap: () {
                           if(orderModel.foodOrder.length > widget.index){
-                            orderModel.foodOrder[widget.index].setOrderCnt(foodCount - 1);
+                            orderModel.foodOrder[widget.index].orderCntOper(false);
                             print(orderModel.foodOrder[widget.index]);
                           }else{
                             print("Error: foodOrder length :" + orderModel.foodOrder.length.toString());

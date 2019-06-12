@@ -4,8 +4,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_date_pickers/flutter_date_pickers.dart' as dp;
 import 'package:intl/intl.dart';
 import 'package:parl_cuision/reservation/custom_picker.dart';
+import 'package:parl_cuision/reservation/reserve_dialog.dart';
 
 class ReservSteps extends StatefulWidget {
+  Function() callback;
+
+  ReservSteps(this.callback);
+
   @override
   _ReservStepsState createState() => new _ReservStepsState();
 }
@@ -510,10 +515,22 @@ class _ReservStepsState extends State<ReservSteps> {
   }
 
   void nextStep() {
-    setState(() {
-      if(current_step < steps_count-1){
+    if(current_step < steps_count-1){
+      setState(() {
         current_step++;
-      }
-    });
+      });
+    }else{
+      showDialog(
+          context: context,
+          builder: (BuildContext context) => ReserveDialog(
+                title: "Success!",
+                reserve_time: "$_hour:$_minute",
+                buttonText: "OK",
+                callback: (){
+                  widget.callback();
+                },
+              ),
+        );
+    }
   }
 }

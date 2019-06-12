@@ -9,8 +9,11 @@ import 'package:parl_cuision/scoped_model/order_model.dart';
 import 'checkout_dialog.dart';
 
 class CheckoutPage extends StatefulWidget {
+  Function(bool) callback;
+
   CheckoutPage({
     Key key,
+    this.callback,
   }) : super(key: key);
 
   @override
@@ -49,7 +52,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
               child: Row(
                 children: <Widget>[
                   IconButton(
-                    onPressed: _navButtonOnPressed,
+                    onPressed: (){ _navButtonOnPressed(false); },
                     icon: Icon(Icons.arrow_back_ios),
                   ),
                   Text(
@@ -77,8 +80,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
     );
   }
 
-  void _navButtonOnPressed() {
+  void _navButtonOnPressed(bool isPlaced) {
     Navigator.pop(context, false);
+    widget.callback(isPlaced);
   }
 
   Widget _buildTopPath(int stepCount) {
@@ -836,11 +840,13 @@ class _CheckoutPageState extends State<CheckoutPage> {
         showDialog(
           context: context,
           builder: (BuildContext context) => CustomDialog(
-                title: "Success",
-                description: "Your order will be ready for pickup at",
-                buttonText: "Okay",
+                title: "Success!",
+                pickup_time: "$_hour:$_minute",
+                buttonText: "OK",
+                checkoutCallback: (){ _navButtonOnPressed(true); },
               ),
         );
+        // _navButtonOnPressed();
       }
     });
   }

@@ -10,6 +10,7 @@ import 'package:parl_cuision/information/information.dart';
 import 'package:parl_cuision/menu/menu.dart';
 import 'package:parl_cuision/profile/profile.dart';
 import 'package:parl_cuision/reservation/reservation_page.dart';
+import 'package:parl_cuision/scoped_model/order_model.dart';
 //import 'package:parl_cuision/reservation/reservation.dart';
 
 class HomePage extends StatefulWidget {
@@ -18,11 +19,39 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  // GlobalKey globalKey = new GlobalKey(debugLabel: 'btm_app_bar');
+
   int _currentIndex = 0;
+
+  void _orderModelRefresh(){
+    OrderModel orderModel = new OrderModel();
+    orderModel.refreshOrder();
+  }
 
   void _menuCallback() {
     setState(() {
       _currentIndex = 4;
+    });
+  }
+
+  void _infoCallback() {
+    setState(() {
+      _currentIndex = 4;
+    });
+  }
+
+  void _reserveCallback() {
+    setState(() {
+      _currentIndex = 0;
+    });
+  }
+
+  void _checkoutCallback(bool isPlaced) {
+    if(isPlaced){
+      _orderModelRefresh();
+    }
+    setState(() {
+      _currentIndex = 0;
     });
   }
 
@@ -37,11 +66,11 @@ class _HomePageState extends State<HomePage> {
 
     final List<Widget> _children = [
       MenuPage(_menuCallback),
-      ReservationPage(),
+      ReservationPage(_reserveCallback),
       //PlaceholderWidget(Colors.orange),
-      InfoPage(),
+      InfoPage(_infoCallback),
       // PlaceholderWidget(Colors.green)
-      CheckoutPage(),
+      CheckoutPage(callback: _checkoutCallback,),
       SettingsPage(),
     ];
 
@@ -68,9 +97,9 @@ class _HomePageState extends State<HomePage> {
       } else {
         itemColor = unselectedColor;
       }
-      if (_currentIndex > 0 && i == 3) {
-        itemColor = disabledColor;
-      }
+      // if (_currentIndex > 0 && i == 3) {
+      //   itemColor = disabledColor;
+      // }
 
       barItems.add(BottomNavigationBarItem(
           icon: getImageIconBox(barItemsIcon[i], itemColor),
@@ -85,6 +114,7 @@ class _HomePageState extends State<HomePage> {
             showSelectedLabels: false,
             showUnselectedLabels: false,
             items: barItems,
+            // key: globalKey,
           )
         : BottomNavigationBar(
             onTap: onTabTapped,
@@ -93,6 +123,7 @@ class _HomePageState extends State<HomePage> {
             showSelectedLabels: false,
             showUnselectedLabels: false,
             items: barItems,
+            // key: globalKey,
           );
 
     return Scaffold(
@@ -115,9 +146,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   void onTabTapped(int index) {
-    if (_currentIndex > 0 && index == 3) {
-      return;
-    }
+    // if (_currentIndex > 0 && index == 3) {
+    //   return;
+    // }
     if (index < 3) {
       setState(() {
         _currentIndex = index;
@@ -125,7 +156,7 @@ class _HomePageState extends State<HomePage> {
     } else {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => CheckoutPage()),
+        MaterialPageRoute(builder: (context) => CheckoutPage(callback: _checkoutCallback,)),
       );
     }
   }

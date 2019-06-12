@@ -92,7 +92,8 @@ class _FoodCardListState extends State<FoodCardList> {
       "Caesar salad",
       "Beet cured gralax"
     ];
-    var md = new OrderModel();
+    var orderModel = new OrderModel();
+    // orderModel.refreshOrder();
     for (int i = 0; i < list.length; i++) {
       var f = list[i];
       FoodModel fd = new FoodModel(
@@ -102,7 +103,7 @@ class _FoodCardListState extends State<FoodCardList> {
           test_foodNames[(f.id - 1) % 3],
           7.00 + (f.id - 1) % 5,
           0);
-      md.foodOrder.add(fd);
+      orderModel.foodOrder.add(fd);
     }
   }
 

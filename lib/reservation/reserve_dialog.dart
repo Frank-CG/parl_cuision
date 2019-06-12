@@ -1,20 +1,20 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 
-class CustomDialog extends StatelessWidget {
-  final String title, pickup_time, buttonText;
+class ReserveDialog extends StatelessWidget {
+  final String title, reserve_time, buttonText;
   final Image image;
 
   String _defaultFontFamily = "Nunito Sans";
 
-  Function() checkoutCallback;
+  Function() callback;
 
-  CustomDialog({
+  ReserveDialog({
     @required this.title,
-    @required this.pickup_time,
+    @required this.reserve_time,
     @required this.buttonText,
     this.image,
-    this.checkoutCallback,
+    this.callback,
   });
 
   @override
@@ -67,7 +67,7 @@ class CustomDialog extends StatelessWidget {
               Container(
                 width: 200,
                 child: Text(
-                  "Your order will be ready for pickup at",
+                  "Your reservation is accepeted:",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 18.0,
@@ -80,7 +80,7 @@ class CustomDialog extends StatelessWidget {
               SizedBox(height: 24.0),
               Container(
                 child: Text(
-                  pickup_time,
+                  reserve_time,
                   style: TextStyle(
                     fontSize: 40.0,
                     fontFamily: _defaultFontFamily,
@@ -89,27 +89,27 @@ class CustomDialog extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 24.0),
-              Container(
-                decoration: new BoxDecoration(
-                  color: Colors.green,
-                  shape: BoxShape.rectangle,
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: const Radius.circular(Consts.padding),
-                    bottomRight: const Radius.circular(Consts.padding),
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black26,
-                      blurRadius: 10.0,
-                      offset: const Offset(0.0, 10.0),
+              GestureDetector(
+                onTap: (){
+                  Navigator.of(context).pop();
+                  callback();
+                },
+                child: Container(
+                  decoration: new BoxDecoration(
+                    color: Colors.green,
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: const Radius.circular(Consts.padding),
+                      bottomRight: const Radius.circular(Consts.padding),
                     ),
-                  ],
-                ),
-                child: GestureDetector(
-                  onTap: (){
-                    Navigator.of(context).pop();
-                    checkoutCallback();
-                  },
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black26,
+                        blurRadius: 10.0,
+                        offset: const Offset(0.0, 10.0),
+                      ),
+                    ],
+                  ),
                   child: Container(
                     height: Consts.padding * 3,
                     alignment: Alignment.center,
@@ -124,39 +124,6 @@ class CustomDialog extends StatelessWidget {
                     ),
                   ),
                 ),
-                // child: Align(
-                //   alignment: Alignment.center,
-                //   child: Container(
-                //       height: Consts.padding*3,
-                //       alignment: Alignment.center,
-                //       child: Text(
-                //         buttonText,
-                //         style: TextStyle(
-                //           fontSize: 20,
-                //           fontFamily: _defaultFontFamily,
-                //           fontWeight: FontWeight.bold,
-                //           color: Colors.white,
-                //         ),
-                //       ),
-                //     ),
-                //   // child: FlatButton(
-                //   //   onPressed: () {
-                //   //     Navigator.of(context).pop(); // To close the dialog
-                //   //     checkoutCallback();
-                //   //   },
-                //   //   child: Container(
-                //   //     child: Text(
-                //   //       buttonText,
-                //   //       style: TextStyle(
-                //   //         fontSize: 20,
-                //   //         fontFamily: _defaultFontFamily,
-                //   //         fontWeight: FontWeight.bold,
-                //   //         color: Colors.white,
-                //   //       ),
-                //   //     ),
-                //   //   ),
-                //   // ),
-                // ),
               ),
             ],
           ),

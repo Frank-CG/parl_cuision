@@ -4,8 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class InfoPage extends StatelessWidget {
-
   String _pageCommonFontFamily = "Nunito Sans";
+
+  Function() callback;
+
+  InfoPage(this.callback);
 
   @override
   Widget build(BuildContext context) {
@@ -34,13 +37,27 @@ class InfoPage extends StatelessWidget {
         children: <Widget>[
           InfoTop(),
           Hours(),
-          SizedBox(height: 40,),
-          Divider(color: Colors.grey[500], height: 2,),
-          SizedBox(height: 20,),
+          SizedBox(
+            height: 40,
+          ),
+          Divider(
+            color: Colors.grey[500],
+            height: 2,
+          ),
+          SizedBox(
+            height: 20,
+          ),
           Payment(),
-          SizedBox(height: 40,),
-          Divider(color: Colors.grey[500], height: 2,),
-          SizedBox(height: 20,),
+          SizedBox(
+            height: 40,
+          ),
+          Divider(
+            color: Colors.grey[500],
+            height: 2,
+          ),
+          SizedBox(
+            height: 20,
+          ),
           Contact(),
         ],
       ),
@@ -48,7 +65,10 @@ class InfoPage extends StatelessWidget {
   }
 
   Widget InfoTop() {
-    var contentTextStyle = new TextStyle(fontSize: 18.0, fontFamily: 'Nunito Sans', );
+    var contentTextStyle = new TextStyle(
+      fontSize: 18.0,
+      fontFamily: 'Nunito Sans',
+    );
     return Container(
       height: ScreenUtil.getInstance().setHeight(933),
       color: Colors.white,
@@ -66,21 +86,26 @@ class InfoPage extends StatelessWidget {
                   ),
                   child: Text(
                     "Information",
-                    style:
-                        TextStyle(fontSize: ScreenUtil.getInstance().setSp(110.0), fontFamily: _pageCommonFontFamily, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontSize: ScreenUtil.getInstance().setSp(110.0),
+                        fontFamily: _pageCommonFontFamily,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
-              Container(
-                width: ScreenUtil.getInstance().setWidth(445),
-                height: ScreenUtil.getInstance().setHeight(333),
-                alignment: Alignment.bottomRight,
+              GestureDetector(
+                onTap: () { callback(); },
                 child: Container(
+                  width: ScreenUtil.getInstance().setWidth(445),
+                  height: ScreenUtil.getInstance().setHeight(333),
                   alignment: Alignment.bottomRight,
-                  child: Image.asset(
-                    "assets/images/nav.png",
-                    height: ScreenUtil.getInstance().setHeight(176 * 1.2),
-                    width: ScreenUtil.getInstance().setWidth(247 * 1.2),
+                  child: Container(
+                    alignment: Alignment.bottomRight,
+                    child: Image.asset(
+                      "assets/images/nav.png",
+                      height: ScreenUtil.getInstance().setHeight(176 * 1.2),
+                      width: ScreenUtil.getInstance().setWidth(247 * 1.2),
+                    ),
                   ),
                 ),
               ),
@@ -98,11 +123,26 @@ class InfoPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text("Canadian dining at its finest.", style: contentTextStyle, ),
-                    Text("Come explore a new,", style: contentTextStyle, ),
-                    Text("completely renovated", style: contentTextStyle,),
-                    Text("dining room with food", style: contentTextStyle,),
-                    Text("and drinks.", style: contentTextStyle,),
+                    Text(
+                      "Canadian dining at its finest.",
+                      style: contentTextStyle,
+                    ),
+                    Text(
+                      "Come explore a new,",
+                      style: contentTextStyle,
+                    ),
+                    Text(
+                      "completely renovated",
+                      style: contentTextStyle,
+                    ),
+                    Text(
+                      "dining room with food",
+                      style: contentTextStyle,
+                    ),
+                    Text(
+                      "and drinks.",
+                      style: contentTextStyle,
+                    ),
                   ],
                 ),
               ),
@@ -123,9 +163,18 @@ class InfoPage extends StatelessWidget {
   }
 
   Widget Hours() {
-    var dataFontStyle = new TextStyle(fontFamily: _pageCommonFontFamily, fontSize: 14.0, fontWeight: FontWeight.w800, color: Colors.grey[700] );
-    var dataDivider = new Divider(color: Colors.grey[300], height: 1,);
-    var blankLine = new SizedBox(height: 8.0,);
+    var dataFontStyle = new TextStyle(
+        fontFamily: _pageCommonFontFamily,
+        fontSize: 14.0,
+        fontWeight: FontWeight.w800,
+        color: Colors.grey[700]);
+    var dataDivider = new Divider(
+      color: Colors.grey[300],
+      height: 1,
+    );
+    var blankLine = new SizedBox(
+      height: 8.0,
+    );
     return Container(
       padding: EdgeInsets.only(top: ScreenUtil.getInstance().setHeight(119)),
       width: ScreenUtil.getInstance().setWidth(983),
@@ -136,17 +185,39 @@ class InfoPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Image.asset("assets/images/icon_hours.png", width:54, height: 55,),
+          Image.asset(
+            "assets/images/icon_hours.png",
+            width: 54,
+            height: 55,
+          ),
           Padding(
             padding: const EdgeInsets.only(top: 8.0),
-            child: Text("Hours", style: TextStyle(fontSize: 24.0, fontFamily: _pageCommonFontFamily, fontWeight: FontWeight.w700,),),
+            child: Text(
+              "Hours",
+              style: TextStyle(
+                fontSize: 24.0,
+                fontFamily: _pageCommonFontFamily,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
           ),
           blankLine,
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Image.asset("assets/images/icon_remove_18dp.png",color: Colors.green,),
-              Text("  DURING SITTING WEEKS", style: TextStyle(fontSize: 14.0, fontFamily: _pageCommonFontFamily, color: Colors.grey[700], fontWeight: FontWeight.w600,),),
+              Image.asset(
+                "assets/images/icon_remove_18dp.png",
+                color: Colors.green,
+              ),
+              Text(
+                "  DURING SITTING WEEKS",
+                style: TextStyle(
+                  fontSize: 14.0,
+                  fontFamily: _pageCommonFontFamily,
+                  color: Colors.grey[700],
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
             ],
           ),
           blankLine,
@@ -154,11 +225,21 @@ class InfoPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text("Breakfast", style: dataFontStyle, textAlign: TextAlign.start), ),
-              
-              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text("7am to 9am", style: dataFontStyle, textAlign: TextAlign.start), ),
-              
-              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text("Tue to Thu", style: dataFontStyle, textAlign: TextAlign.right), ),
+              SizedBox(
+                width: ScreenUtil.getInstance().setWidth(320),
+                child: Text("Breakfast",
+                    style: dataFontStyle, textAlign: TextAlign.start),
+              ),
+              SizedBox(
+                width: ScreenUtil.getInstance().setWidth(320),
+                child: Text("7am to 9am",
+                    style: dataFontStyle, textAlign: TextAlign.start),
+              ),
+              SizedBox(
+                width: ScreenUtil.getInstance().setWidth(320),
+                child: Text("Tue to Thu",
+                    style: dataFontStyle, textAlign: TextAlign.right),
+              ),
             ],
           ),
           dataDivider,
@@ -167,11 +248,21 @@ class InfoPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text("Lunch", style: dataFontStyle, textAlign: TextAlign.start), ),
-              
-              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text("11am to 1:30pm", style: dataFontStyle, textAlign: TextAlign.start),),
-              
-              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text("Mon to Fri", style: dataFontStyle, textAlign: TextAlign.right),),
+              SizedBox(
+                width: ScreenUtil.getInstance().setWidth(320),
+                child: Text("Lunch",
+                    style: dataFontStyle, textAlign: TextAlign.start),
+              ),
+              SizedBox(
+                width: ScreenUtil.getInstance().setWidth(320),
+                child: Text("11am to 1:30pm",
+                    style: dataFontStyle, textAlign: TextAlign.start),
+              ),
+              SizedBox(
+                width: ScreenUtil.getInstance().setWidth(320),
+                child: Text("Mon to Fri",
+                    style: dataFontStyle, textAlign: TextAlign.right),
+              ),
             ],
           ),
           dataDivider,
@@ -180,11 +271,24 @@ class InfoPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text("Bar menu", style: dataFontStyle, textAlign: TextAlign.start,),),
-              
-              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text("3pm to 5pm", style: dataFontStyle, textAlign: TextAlign.start),),
-              
-              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text("Mon to Thu", style: dataFontStyle, textAlign: TextAlign.right),),
+              SizedBox(
+                width: ScreenUtil.getInstance().setWidth(320),
+                child: Text(
+                  "Bar menu",
+                  style: dataFontStyle,
+                  textAlign: TextAlign.start,
+                ),
+              ),
+              SizedBox(
+                width: ScreenUtil.getInstance().setWidth(320),
+                child: Text("3pm to 5pm",
+                    style: dataFontStyle, textAlign: TextAlign.start),
+              ),
+              SizedBox(
+                width: ScreenUtil.getInstance().setWidth(320),
+                child: Text("Mon to Thu",
+                    style: dataFontStyle, textAlign: TextAlign.right),
+              ),
             ],
           ),
           dataDivider,
@@ -193,20 +297,43 @@ class InfoPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text("Dinner", style: dataFontStyle, textAlign: TextAlign.start),),
-              
-              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text("5pm to 8pm", style: dataFontStyle, textAlign: TextAlign.start),),
-              
-              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text("Mon to Thu", style: dataFontStyle, textAlign: TextAlign.right),),
+              SizedBox(
+                width: ScreenUtil.getInstance().setWidth(320),
+                child: Text("Dinner",
+                    style: dataFontStyle, textAlign: TextAlign.start),
+              ),
+              SizedBox(
+                width: ScreenUtil.getInstance().setWidth(320),
+                child: Text("5pm to 8pm",
+                    style: dataFontStyle, textAlign: TextAlign.start),
+              ),
+              SizedBox(
+                width: ScreenUtil.getInstance().setWidth(320),
+                child: Text("Mon to Thu",
+                    style: dataFontStyle, textAlign: TextAlign.right),
+              ),
             ],
           ),
           dataDivider,
-          SizedBox(height: 40.0,),
+          SizedBox(
+            height: 40.0,
+          ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Image.asset("assets/images/icon_remove_18dp.png",color: Colors.green,),
-              Text("  DURING RECESS WEEKS", style: TextStyle(fontSize: 14.0,fontFamily: _pageCommonFontFamily, color: Colors.grey[700], fontWeight: FontWeight.w600,),),
+              Image.asset(
+                "assets/images/icon_remove_18dp.png",
+                color: Colors.green,
+              ),
+              Text(
+                "  DURING RECESS WEEKS",
+                style: TextStyle(
+                  fontSize: 14.0,
+                  fontFamily: _pageCommonFontFamily,
+                  color: Colors.grey[700],
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
             ],
           ),
           blankLine,
@@ -214,11 +341,21 @@ class InfoPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text("Lunch", style: dataFontStyle, textAlign: TextAlign.start), ),
-              
-              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text("11am to 1:30pm", style: dataFontStyle, textAlign: TextAlign.start),),
-              
-              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text(" ", style: dataFontStyle, textAlign: TextAlign.right),),
+              SizedBox(
+                width: ScreenUtil.getInstance().setWidth(320),
+                child: Text("Lunch",
+                    style: dataFontStyle, textAlign: TextAlign.start),
+              ),
+              SizedBox(
+                width: ScreenUtil.getInstance().setWidth(320),
+                child: Text("11am to 1:30pm",
+                    style: dataFontStyle, textAlign: TextAlign.start),
+              ),
+              SizedBox(
+                width: ScreenUtil.getInstance().setWidth(320),
+                child:
+                    Text(" ", style: dataFontStyle, textAlign: TextAlign.right),
+              ),
             ],
           ),
           dataDivider,
@@ -226,11 +363,21 @@ class InfoPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              SizedBox(width: ScreenUtil.getInstance().setWidth(320), child: Text(" ", style: dataFontStyle, textAlign: TextAlign.start), ),
-              
-              SizedBox(width: ScreenUtil.getInstance().setWidth(630), child: Text("*Closed during summer brakes", style: dataFontStyle, textAlign: TextAlign.start),),
-              
-              SizedBox(width: ScreenUtil.getInstance().setWidth(10), child: Text(" ", style: dataFontStyle, textAlign: TextAlign.right),),
+              SizedBox(
+                width: ScreenUtil.getInstance().setWidth(320),
+                child:
+                    Text(" ", style: dataFontStyle, textAlign: TextAlign.start),
+              ),
+              SizedBox(
+                width: ScreenUtil.getInstance().setWidth(630),
+                child: Text("*Closed during summer brakes",
+                    style: dataFontStyle, textAlign: TextAlign.start),
+              ),
+              SizedBox(
+                width: ScreenUtil.getInstance().setWidth(10),
+                child:
+                    Text(" ", style: dataFontStyle, textAlign: TextAlign.right),
+              ),
             ],
           ),
         ],
@@ -242,8 +389,14 @@ class InfoPage extends StatelessWidget {
     String title = "Payment";
     String content = "We accept Apple Pay, credit cards, debit cards and cash.";
 
-    var dataFontStyle = new TextStyle(fontFamily: _pageCommonFontFamily, fontSize: 18.0, fontWeight: FontWeight.w300, color: Colors.grey[500] );
-    var blankLine = new SizedBox(height: 8.0,);
+    var dataFontStyle = new TextStyle(
+        fontFamily: _pageCommonFontFamily,
+        fontSize: 18.0,
+        fontWeight: FontWeight.w300,
+        color: Colors.grey[500]);
+    var blankLine = new SizedBox(
+      height: 8.0,
+    );
 
     return Container(
       width: ScreenUtil.getInstance().setWidth(983),
@@ -251,30 +404,66 @@ class InfoPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Image.asset("assets/images/icon_payment.png", width:54, height: 55,),
-          Padding(
-            padding: const EdgeInsets.only(top: 8.0),
-            child: Text(title, style: TextStyle(fontSize: 24.0, fontFamily: _pageCommonFontFamily, fontWeight: FontWeight.w700,),),
+          Image.asset(
+            "assets/images/icon_payment.png",
+            width: 54,
+            height: 55,
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 24.0, bottom: 24.0,),
-            child: Text(content, style: dataFontStyle,),
+            padding: const EdgeInsets.only(top: 8.0),
+            child: Text(
+              title,
+              style: TextStyle(
+                fontSize: 24.0,
+                fontFamily: _pageCommonFontFamily,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 24.0,
+              bottom: 24.0,
+            ),
+            child: Text(
+              content,
+              style: dataFontStyle,
+            ),
           ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Image.asset("assets/images/pay-ApplePay-dark.png", width: ScreenUtil.getInstance().setWidth(160), height: ScreenUtil.getInstance().setHeight(96),),
-              Image.asset("assets/images/pay-Visa-dark.png", width: ScreenUtil.getInstance().setWidth(160), height: ScreenUtil.getInstance().setHeight(96),),
-              Image.asset("assets/images/pay-MasterCard-dark.png", width: ScreenUtil.getInstance().setWidth(160), height: ScreenUtil.getInstance().setHeight(96),),
-              Image.asset("assets/images/pay-debit.png", width: ScreenUtil.getInstance().setWidth(160), height: ScreenUtil.getInstance().setHeight(96),),
-              Image.asset("assets/images/pay-cash.png", width: ScreenUtil.getInstance().setWidth(160), height: ScreenUtil.getInstance().setHeight(96),),
+              Image.asset(
+                "assets/images/pay-ApplePay-dark.png",
+                width: ScreenUtil.getInstance().setWidth(160),
+                height: ScreenUtil.getInstance().setHeight(96),
+              ),
+              Image.asset(
+                "assets/images/pay-Visa-dark.png",
+                width: ScreenUtil.getInstance().setWidth(160),
+                height: ScreenUtil.getInstance().setHeight(96),
+              ),
+              Image.asset(
+                "assets/images/pay-MasterCard-dark.png",
+                width: ScreenUtil.getInstance().setWidth(160),
+                height: ScreenUtil.getInstance().setHeight(96),
+              ),
+              Image.asset(
+                "assets/images/pay-debit.png",
+                width: ScreenUtil.getInstance().setWidth(160),
+                height: ScreenUtil.getInstance().setHeight(96),
+              ),
+              Image.asset(
+                "assets/images/pay-cash.png",
+                width: ScreenUtil.getInstance().setWidth(160),
+                height: ScreenUtil.getInstance().setHeight(96),
+              ),
             ],
           ),
           blankLine,
         ],
       ),
     );
-
   }
 
   Widget Contact() {
@@ -284,8 +473,15 @@ class InfoPage extends StatelessWidget {
     String phone2 = "613-992-1497";
     String phone3 = "613-992-7407";
 
-    var dataFontStyle = new TextStyle(fontFamily: _pageCommonFontFamily, fontSize: 14.0, fontWeight: FontWeight.w800, color: Colors.grey[500] );
-    var dataDivider = new Divider(color: Colors.grey[300], height: 1,);
+    var dataFontStyle = new TextStyle(
+        fontFamily: _pageCommonFontFamily,
+        fontSize: 14.0,
+        fontWeight: FontWeight.w800,
+        color: Colors.grey[500]);
+    var dataDivider = new Divider(
+      color: Colors.grey[300],
+      height: 1,
+    );
     return Container(
       padding: EdgeInsets.only(top: ScreenUtil.getInstance().setHeight(119)),
       width: ScreenUtil.getInstance().setWidth(983),
@@ -296,57 +492,115 @@ class InfoPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Image.asset("assets/images/icon_contact.png", width:54, height: 55,),
+          Image.asset(
+            "assets/images/icon_contact.png",
+            width: 54,
+            height: 55,
+          ),
           Padding(
             padding: const EdgeInsets.only(top: 8.0),
-            child: Text("Contact", style: TextStyle(fontSize: 24.0, fontFamily: _pageCommonFontFamily, fontWeight: FontWeight.w700,),),
+            child: Text(
+              "Contact",
+              style: TextStyle(
+                fontSize: 24.0,
+                fontFamily: _pageCommonFontFamily,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
           ),
           blankLine(1),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Image.asset("assets/images/icon_remove_18dp.png",color: Colors.green,),
-              Text("  PARLIAMENTARY DINING ROOM", style: TextStyle(fontSize: 14.0, fontFamily: _pageCommonFontFamily, color: Colors.grey[700], fontWeight: FontWeight.w600,),),
+              Image.asset(
+                "assets/images/icon_remove_18dp.png",
+                color: Colors.green,
+              ),
+              Text(
+                "  PARLIAMENTARY DINING ROOM",
+                style: TextStyle(
+                  fontSize: 14.0,
+                  fontFamily: _pageCommonFontFamily,
+                  color: Colors.grey[700],
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
             ],
           ),
           blankLine(3),
-          Text(addr1, style: dataFontStyle,),
+          Text(
+            addr1,
+            style: dataFontStyle,
+          ),
           dataDivider,
           blankLine(1),
-          Text("Phone: "+phone1, style: dataFontStyle,),
+          Text(
+            "Phone: " + phone1,
+            style: dataFontStyle,
+          ),
           blankLine(3),
-
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Image.asset("assets/images/icon_remove_18dp.png",color: Colors.green,),
-              Text("  WEST BLOCK CAFETERIA", style: TextStyle(fontSize: 14.0, fontFamily: _pageCommonFontFamily, color: Colors.grey[700], fontWeight: FontWeight.w600,),),
+              Image.asset(
+                "assets/images/icon_remove_18dp.png",
+                color: Colors.green,
+              ),
+              Text(
+                "  WEST BLOCK CAFETERIA",
+                style: TextStyle(
+                  fontSize: 14.0,
+                  fontFamily: _pageCommonFontFamily,
+                  color: Colors.grey[700],
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
             ],
           ),
           blankLine(3),
-          Text(addr2, style: dataFontStyle,),
+          Text(
+            addr2,
+            style: dataFontStyle,
+          ),
           dataDivider,
           blankLine(1),
-          Text("Phone: "+phone2, style: dataFontStyle,),
+          Text(
+            "Phone: " + phone2,
+            style: dataFontStyle,
+          ),
           blankLine(3),
-
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Image.asset("assets/images/icon_remove_18dp.png",color: Colors.green,),
-              Text("  CATERING SERVICE", style: TextStyle(fontSize: 14.0, fontFamily: _pageCommonFontFamily, color: Colors.grey[700], fontWeight: FontWeight.w600,),),
+              Image.asset(
+                "assets/images/icon_remove_18dp.png",
+                color: Colors.green,
+              ),
+              Text(
+                "  CATERING SERVICE",
+                style: TextStyle(
+                  fontSize: 14.0,
+                  fontFamily: _pageCommonFontFamily,
+                  color: Colors.grey[700],
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
             ],
           ),
           blankLine(3),
-          Text("Phone: "+phone3, style: dataFontStyle,),
+          Text(
+            "Phone: " + phone3,
+            style: dataFontStyle,
+          ),
           blankLine(24),
-
         ],
       ),
     );
   }
 
-  SizedBox blankLine(int lines){
-    return SizedBox(height: 8.0 * lines,);
+  SizedBox blankLine(int lines) {
+    return SizedBox(
+      height: 8.0 * lines,
+    );
   }
 }

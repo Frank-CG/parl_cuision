@@ -6,6 +6,9 @@ import 'package:parl_cuision/reservation/reserv_steps.dart';
 class ReservationPage extends StatelessWidget {
   String _pageCommonFontFamily = "Nunito Sans";
 
+  Function() callback;
+  ReservationPage(this.callback);
+
   @override
   Widget build(BuildContext context) {
     ScreenUtil.instance =
@@ -28,7 +31,7 @@ class ReservationPage extends StatelessWidget {
           Container(
             height: ScreenUtil.getInstance().setHeight(1870),
             // color: Colors.grey[300],
-            child: ReservSteps(),
+            child: ReservSteps(callback),
           ),
         ],
       ),
