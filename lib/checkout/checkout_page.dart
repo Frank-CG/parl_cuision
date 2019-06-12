@@ -27,8 +27,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
   final List<String> _stepTitles = <String>["REVIEW", "SET TIME", "CONFIRM"];
   int current_step = 0;
   double _kStepSize = 24.0;
-  int _hour = 0;
-  int _minute = 0;
+  int _hour = -1;
+  int _minute = -1;
   double totalPrice = 0;
   int itemsCount = 0;
 
@@ -52,7 +52,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
               child: Row(
                 children: <Widget>[
                   IconButton(
-                    onPressed: (){ _navButtonOnPressed(false); },
+                    onPressed: () {
+                      _navButtonOnPressed(false);
+                    },
                     icon: Icon(Icons.arrow_back_ios),
                   ),
                   Text(
@@ -332,14 +334,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
   }
 
   void _itemChangeCallback() {
-    // OrderModel om = new OrderModel();
-    // double temp = 0;
-    // for(int i=0; i<om.foodOrder.length; i++){
-    //   var fd = om.foodOrder[i];
-    //   if(fd.orderCount > 0){
-    //     temp += fd.foodPrice * fd.orderCount;
-    //   }
-    // }
     setState(() {
       totalPrice = 0; //temp;
     });
@@ -348,6 +342,23 @@ class _CheckoutPageState extends State<CheckoutPage> {
   Widget _getStepPageContent2() {
     List<String> _hours = <String>["11", "12", "13", "14", "15"];
     List<String> _minutes = <String>["00", "15", "30", "45"];
+    String suffix = _hour > 11 ? "pm" : "am";
+    String pickupTime = "$_hour:$_minute $suffix";
+
+    TextStyle pickupTimeStyle = TextStyle(
+        fontSize: 28.0,
+        fontFamily: _defaultFontFamily,
+        fontWeight: FontWeight.bold);
+
+    if ((current_step == 1) && (_hour == -1 || _minute == -1)) {
+      pickupTime = "Unselected";
+      pickupTimeStyle = TextStyle(
+        fontSize: 18.0,
+        fontFamily: _defaultFontFamily,
+        fontWeight: FontWeight.bold,
+        color: Colors.grey,
+      );
+    }
 
     return Column(
       children: <Widget>[
@@ -426,11 +437,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
               Container(
                 width: ScreenUtil.getInstance().setWidth(400),
                 child: Text(
-                  "$_hour:$_minute pm",
-                  style: TextStyle(
-                      fontSize: 28.0,
-                      fontFamily: _defaultFontFamily,
-                      fontWeight: FontWeight.bold),
+                  pickupTime,
+                  style: pickupTimeStyle,
                 ),
               ),
             ],
@@ -520,12 +528,11 @@ class _CheckoutPageState extends State<CheckoutPage> {
     ));
 
     OrderModel orderModel = new OrderModel();
-    for(int i=0; i<orderModel.foodOrder.length; i++){
+    for (int i = 0; i < orderModel.foodOrder.length; i++) {
       FoodModel f = orderModel.foodOrder[i];
-      if(f.orderCount > 0){
-        bodyList.add(
-          _getOrderItem(f.foodName, f.orderCount.toString(), "\$" + (f.foodPrice*f.orderCount).toString())
-        );
+      if (f.orderCount > 0) {
+        bodyList.add(_getOrderItem(f.foodName, f.orderCount.toString(),
+            "\$" + (f.foodPrice * f.orderCount).toString()));
       }
     }
 
@@ -644,7 +651,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 //   ),
                 //   _getOrderItem("Brussel sprouts", "2", "\$14.00"),
                 // ],
-              
               ),
             ),
           ),
@@ -810,13 +816,18 @@ class _CheckoutPageState extends State<CheckoutPage> {
     if (current_step == 2) {
       buttonText = "Place order";
     }
+    Color buttonColor = Colors.green;
+    if ((current_step == 1) && (_hour == -1 || _minute == -1)) {
+      buttonColor = Colors.grey.shade500;
+    }
+
     return GestureDetector(
       onTap: _nextStep,
       child: Container(
         height: ScreenUtil.getInstance().setHeight(186),
         width: ScreenUtil.getInstance().setWidth(1125),
         alignment: Alignment(0, 0),
-        color: Colors.green,
+        color: buttonColor,
         child: Text(
           buttonText,
           style: TextStyle(
@@ -833,6 +844,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
   void _nextStep() {
     print(current_step);
+    if ((current_step == 1) && (_hour == -1 || _minute == -1)) {
+      return;
+    }
     setState(() {
       if (current_step < 2) {
         current_step++;
@@ -843,7 +857,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 title: "Success!",
                 pickup_time: "$_hour:$_minute",
                 buttonText: "OK",
-                checkoutCallback: (){ _navButtonOnPressed(true); },
+                checkoutCallback: () {
+                  _navButtonOnPressed(true);
+                },
               ),
         );
         // _navButtonOnPressed();

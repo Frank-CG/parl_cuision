@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_date_pickers/flutter_date_pickers.dart' as dp;
 import 'package:intl/intl.dart';
+import 'package:parl_cuision/common/ex_day_picker.dart';
 import 'package:parl_cuision/reservation/custom_picker.dart';
 import 'package:parl_cuision/reservation/reserve_dialog.dart';
 
@@ -21,7 +22,7 @@ class _ReservStepsState extends State<ReservSteps> {
   final int steps_count = 4;
   int current_step = 0;
   double _kStepSize = 24.0;
-  int _guestNumber = 1;
+  int _guestNumber = 0;
   DateTime _selectedDate;
   DateTime _firstDate;
   DateTime _lastDate;
@@ -35,13 +36,11 @@ class _ReservStepsState extends State<ReservSteps> {
     super.initState();
 
     _selectedDate = DateTime.now();
-    _firstDate = DateTime.now().subtract(Duration(days: 45));
-    _lastDate = DateTime.now().add(Duration(days: 45));
-    _hour = DateTime.now().hour;
-    _minute = DateTime.now().minute;
+    _firstDate = DateTime.now().subtract(Duration(hours: 1));
+    _lastDate = DateTime.now().add(Duration(days: 365));
+    _hour = -1; //DateTime.now().hour;
+    _minute = -1; //DateTime.now().minute;
   }
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -68,14 +67,15 @@ class _ReservStepsState extends State<ReservSteps> {
 
   Widget _getNextButton() {
     String buttonText = "Next Step";
-    if(current_step == steps_count - 1){
+    if (current_step == steps_count - 1) {
       buttonText = "Reserve";
     }
+    Color buttonColor = (current_step == 2 && (_hour == -1 || _minute == -1)) ? Colors.grey : Colors.green;
     return Container(
       child: ButtonTheme(
         minWidth: ScreenUtil.getInstance().setWidth(850),
         child: RaisedButton(
-          color: Colors.green,
+          color: buttonColor,
           textColor: Colors.white,
           shape: new RoundedRectangleBorder(
               borderRadius: new BorderRadius.circular(10.0)),
@@ -359,8 +359,8 @@ class _ReservStepsState extends State<ReservSteps> {
   void guestsPickOnTab(int add) {
     setState(() {
       _guestNumber = _guestNumber + add;
-      if (_guestNumber < 1) {
-        _guestNumber = 1;
+      if (_guestNumber < 0) {
+        _guestNumber = 0;
       }
       if (_guestNumber > 8) {
         _guestNumber = 8;
@@ -394,18 +394,27 @@ class _ReservStepsState extends State<ReservSteps> {
     return Container(
       height: ScreenUtil.getInstance().setHeight(1090),
       padding: EdgeInsets.all(16.0),
-      child: dp.DayPicker(
+      child: ExDayPicker(
         selectedDate: _selectedDate,
         onChanged: _onSelectedDateChanged,
         firstDate: _firstDate,
         lastDate: _lastDate,
+        onlyWeekdays: true,
         datePickerStyles: styles,
       ),
     );
   }
 
   Widget _getStepPageContent3() {
-    List<String> _hours = <String>["11", "12", "13", "14", "15"];
+    // List<String> _hours = <String>["11", "12", "13", "14", "15"];
+    List<String> _hours = <String>[];
+    for(int i=0; i<24; i++){
+      if(i<10){
+        _hours.add("0"+i.toString());
+      }else{
+        _hours.add(i.toString());
+      }
+    }
     List<String> _minutes = <String>["00", "15", "30", "45"];
     return Container(
       margin: EdgeInsets.only(
@@ -427,6 +436,13 @@ class _ReservStepsState extends State<ReservSteps> {
       fontWeight: FontWeight.bold,
       fontSize: 50.0,
     );
+    if (_hour == -1 || _minute == -1) {
+      timeStyle = TextStyle(
+        fontWeight: FontWeight.bold,
+        fontSize: 24.0,
+        color: Colors.grey.shade600,
+      );
+    }
     return Container(
       margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
       child: Text(
@@ -439,12 +455,16 @@ class _ReservStepsState extends State<ReservSteps> {
 
   String _getSelectedTimeFormated() {
     String result = "";
-    String temp = "";
-    temp = "0" + _hour.toString();
-    result += temp.substring(temp.length - 2);
-    result += ":";
-    temp = "0" + _minute.toString();
-    result += temp.substring(temp.length - 2);
+    if (_hour == -1 || _minute == -1) {
+      result = "Unselected";
+    } else {
+      String temp = "";
+      temp = "0" + _hour.toString();
+      result += temp.substring(temp.length - 2);
+      result += ":";
+      temp = "0" + _minute.toString();
+      result += temp.substring(temp.length - 2);
+    }
     return result;
   }
 
@@ -470,13 +490,16 @@ class _ReservStepsState extends State<ReservSteps> {
   Widget _getStepPageContent4() {
     return Container(
       margin: EdgeInsets.only(
-        top: 30.0, bottom: 40.0,
+        top: 30.0,
+        bottom: 40.0,
       ),
       // color: Colors.lightGreen[300],
       child: Column(
         children: <Widget>[
           Container(
-            margin: EdgeInsets.only(bottom: 20.0,),
+            margin: EdgeInsets.only(
+              bottom: 20.0,
+            ),
             child: Image.asset(
               "assets/images/icon_summary.png",
               width: ScreenUtil.getInstance().setWidth(216),
@@ -515,22 +538,25 @@ class _ReservStepsState extends State<ReservSteps> {
   }
 
   void nextStep() {
-    if(current_step < steps_count-1){
+    if(current_step == 2 && (_hour == -1 || _minute == -1)){
+      return;
+    }
+    if (current_step < steps_count - 1) {
       setState(() {
         current_step++;
       });
-    }else{
+    } else {
       showDialog(
-          context: context,
-          builder: (BuildContext context) => ReserveDialog(
-                title: "Success!",
-                reserve_time: "$_hour:$_minute",
-                buttonText: "OK",
-                callback: (){
-                  widget.callback();
-                },
-              ),
-        );
+        context: context,
+        builder: (BuildContext context) => ReserveDialog(
+              title: "Success!",
+              reserve_time: "$_hour:$_minute",
+              buttonText: "OK",
+              callback: () {
+                widget.callback();
+              },
+            ),
+      );
     }
   }
 }

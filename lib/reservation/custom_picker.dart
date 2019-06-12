@@ -8,30 +8,51 @@ class CustomPicker extends StatefulWidget {
 
   CustomPicker(this._title, this._options, this.callback);
   _CustomPickerState createState() => _CustomPickerState();
-}
 
-class _CustomPickerState extends State<CustomPicker> {
-  int _selectedIndex = -1;
+  }
+  
+  class _CustomPickerState extends State<CustomPicker> {
+    int _selectedIndex = -1;
+    int _startIndex;
+    int _endIndex;
+    int _pageShowedCount;
+  
+    
+  
+    TextStyle selectedStyle = TextStyle(
+      fontSize: 18.0,
+      fontFamily: "Nunito Sans",
+      color: Colors.white,
+      fontWeight: FontWeight.bold,
+    );
+    TextStyle unSelectedStyle = TextStyle(
+      fontSize: 18.0,
+      fontFamily: "Nunito Sans",
+      color: Colors.grey.shade600,
+      fontWeight: FontWeight.bold,
+    );
+  
+    TextStyle titleStyle = TextStyle(
+      fontSize: 12.0,
+      fontFamily: "Nunito Sans",
+      fontWeight: FontWeight.bold,
+    );
+  
+    @override
+    void initState() {
+      super.initState();
+  
+      _pageShowedCount = 5;
+      _startIndex = 0;
+      _endIndex = widget._options.length - 1;
+      if (_endIndex > _pageShowedCount - 1) {
+        _startIndex =
+            ((widget._options.length - _pageShowedCount) / 2).truncate();
+        _endIndex = _startIndex + _pageShowedCount;
+      }
+  }
 
-  TextStyle selectedStyle = TextStyle(
-    fontSize: 18.0,
-    fontFamily: "Nunito Sans",
-    color: Colors.white,
-    fontWeight: FontWeight.bold,
-  );
-  TextStyle unSelectedStyle = TextStyle(
-    fontSize: 18.0,
-    fontFamily: "Nunito Sans",
-    color: Colors.grey.shade600,
-    fontWeight: FontWeight.bold,
-  );
-
-  TextStyle titleStyle = TextStyle(
-    fontSize: 12.0,
-    fontFamily: "Nunito Sans",
-    fontWeight: FontWeight.bold,
-  );
-
+  
   void _itemOnSelected(int index) {
     setState(() {
       _selectedIndex = index;
@@ -49,7 +70,7 @@ class _CustomPickerState extends State<CustomPicker> {
         _itemOnSelected(index);
       },
       child: Container(
-        width: 40.0,
+        width: 60.0,
         height: 30.0,
         alignment: Alignment.center,
         decoration: new BoxDecoration(
@@ -70,6 +91,23 @@ class _CustomPickerState extends State<CustomPicker> {
     for (int i = 0; i < widget._options.length; i++) {
       _ops.add(_getItem(i));
     }
+    Widget selector;
+
+    ScrollController _scrollController = new ScrollController(initialScrollOffset: 60.0*7);
+    
+    if (widget._title == "HOURS") {
+      selector = ListView(
+        scrollDirection: Axis.horizontal,
+        children: _ops,
+        controller: _scrollController,
+      );
+    } else {
+      selector = Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: _ops,
+      );
+    }
     return Column(
       children: <Widget>[
         Container(
@@ -89,11 +127,7 @@ class _CustomPickerState extends State<CustomPicker> {
             ),
             borderRadius: new BorderRadius.all(new Radius.circular(20.0)),
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: _ops,
-          ),
+          child: selector,
         ),
       ],
     );
