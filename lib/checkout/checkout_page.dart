@@ -340,7 +340,15 @@ class _CheckoutPageState extends State<CheckoutPage> {
   }
 
   Widget _getStepPageContent2() {
-    List<String> _hours = <String>["11", "12", "13", "14", "15"];
+    // List<String> _hours = <String>["11", "12", "13", "14", "15"];
+    List<String> _hours = <String>[];
+    for(int i=0; i<24; i++){
+      if(i<10){
+        _hours.add("0"+i.toString());
+      }else{
+        _hours.add(i.toString());
+      }
+    }
     List<String> _minutes = <String>["00", "15", "30", "45"];
     String suffix = _hour > 11 ? "pm" : "am";
     String pickupTime = "$_hour:$_minute $suffix";
