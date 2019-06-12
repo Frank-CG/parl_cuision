@@ -544,6 +544,10 @@ class _CheckoutPageState extends State<CheckoutPage> {
       }
     }
 
+    String surfix = _hour > 11 ? "pm" : "am";
+    String pickupTime = "$_hour:$_minute $surfix";
+
+
     return Column(
       children: <Widget>[
         Container(
@@ -697,7 +701,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                       ),
                     ),
                     Text(
-                      "$_hour:$_minute pm",
+                      pickupTime,
                       style: TextStyle(
                         fontSize: 20.0,
                         fontFamily: _defaultFontFamily,
