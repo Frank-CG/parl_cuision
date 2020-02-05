@@ -1,0 +1,6 @@
+-   repo: https://github.com/Frank-CG/parl_cuision.git
+    rev: v2.4.0
+    hooks:
+    -   id: detect-secrets
+        args: ['--baseline', '.secrets.baseline']
+        exclude: .*/tests/.*
